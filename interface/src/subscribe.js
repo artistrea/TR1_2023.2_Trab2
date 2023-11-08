@@ -1,4 +1,4 @@
-import { setGraphBits } from "./graph";
+import { setGraphBits } from "./chart";
 
 /**
  * @param {{

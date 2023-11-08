@@ -3,13 +3,13 @@ import cors from "cors";
 import type { Response } from "express-serve-static-core";
 
 const port = 3001;
+const receptorBaseUrl = "http://localhost:3002";
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
 let interfaceClient: Response<any, Record<string, any>, number> | undefined;
-const receptorBaseUrl = "http://localhost:3002/";
 
 type ReceptorMessage = {
   bits: string;
