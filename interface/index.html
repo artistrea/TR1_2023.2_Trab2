@@ -1,13 +1,56 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <link rel="stylesheet" href="./src/style.css" />
+    <title>Interface</title>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/main.js"></script>
+    <main class="bg-slate-900 min-h-screen w-full text-blue-50">
+      <h1 class="text-3xl p-6 font-bold">Interface para o Trabalho 2</h1>
+      <div class="grid grid-cols-3 w-full px-6">
+        <div class="border border-red-400">
+          <span class="flex justify-between">
+            <h2 class="text-blue-50/90 text-3xl">Transmissor</h2>
+            <div
+              id="transmitter-connected-status"
+              class="group flex items-end flex-col justify-center"
+              data-connected=""
+            >
+              <div class="flex items-center gap-2">
+                <div
+                  class="w-4 h-4 group-data-[connected='false']:bg-red-400 group-data-[connected='true']:bg-green-400 group-data-[connected='']:bg-yellow-400 rounded-full"
+                ></div>
+                <p
+                  class="my-auto group-data-[connected='false']:block opacity-90 hidden"
+                >
+                  Erro!
+                </p>
+                <p
+                  class="my-auto group-data-[connected='true']:block opacity-90 hidden"
+                >
+                  Conectado
+                </p>
+                <p
+                  class="my-auto group-data-[connected='']:block opacity-90 hidden"
+                >
+                  Conectando...
+                </p>
+              </div>
+              <p class="group-data-[connected='false']:block opacity-80 hidden">
+                Tentando novamente em <span data-name="timer"></span>s
+              </p>
+            </div>
+          </span>
+        </div>
+        <div></div>
+        <div class="border border-green-400">
+          <h2 class="text-blue-50/90 text-3xl">Receptor</h2>
+        </div>
+      </div>
+    </main>
+    <script type="module" src="./src/main.js"></script>
   </body>
 </html>

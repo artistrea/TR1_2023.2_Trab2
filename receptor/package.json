@@ -1,0 +1,12 @@
+{
+  "name": "receptor",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "ts-node server.ts"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "express": "^4.18.2"
+  }
+}
