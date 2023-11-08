@@ -10,6 +10,14 @@
   <body>
     <main class="bg-slate-900 min-h-screen w-full text-blue-50">
       <h1 class="text-3xl p-6 font-bold">Interface para o Trabalho 2</h1>
+      <form
+        id="send-text-form"
+        class="flex flex-col gap-1 w-max m-5 p-5 relative before:border before:absolute before:right-0 before:bottom-0 before:top-1/2 after:[content:'>'] after:absolute after:-right-[10px] after:-bottom-3 after:rotate-90 after:text-3xl"
+      >
+        <label for="text-to-send">Faça o transmissor enviar um texto: </label>
+        <input class="px-3 py-1 bg-slate-800" type="text" id="text-to-send" />
+        <button class="bg-slate-800/50 px-3 py-1">Send</button>
+      </form>
       <div class="grid grid-cols-3 w-full px-6">
         <div class="border border-red-400">
           <span class="flex justify-between">
@@ -44,6 +52,13 @@
               </p>
             </div>
           </span>
+          <div class="m-4 p-4 bg-slate-800/50">
+            Texto: "<span id="transmitter-text"></span>"
+          </div>
+          <div class="m-4 p-4 bg-slate-800/50">
+            Texto codificado:
+            <span id="transmitter-bits" class="break-all"></span>
+          </div>
         </div>
         <div></div>
         <div class="border border-green-400">
