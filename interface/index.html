@@ -52,25 +52,59 @@
               </p>
             </div>
           </span>
-          <p class="ml-8 mt-4">
-            Texto: 
-          </p>
+          <p class="ml-8 mt-4">Texto:</p>
           <div class="mx-4 p-4 bg-slate-800/50">
             "<span id="transmitter-text"></span>"
           </div>
-          <p class="ml-8 mt-4">
-            Texto codificado: 
-          </p>
+          <p class="ml-8 mt-4">Texto codificado:</p>
           <div class="mx-4 p-4 bg-slate-800/50">
             <span id="transmitter-bits" class="break-all"></span>
           </div>
         </div>
-        <div class="p-4 row-span-2 bg-slate-800/40 rounded-md">
-          <h2 class="text-blue-50/90 text-3xl">Gráfico</h2>
-        </div>
         <div class="p-4 bg-slate-800/40 rounded-md">
           <span class="flex justify-between">
             <h2 class="text-blue-50/90 text-3xl">Receptor</h2>
+            <div
+              id="receptor-connected-status"
+              class="group flex items-end flex-col justify-center"
+              data-connected=""
+            >
+              <div class="flex items-center gap-2">
+                <div
+                  class="w-4 h-4 group-data-[connected='false']:bg-red-400 group-data-[connected='true']:bg-green-400 group-data-[connected='']:bg-yellow-400 rounded-full"
+                ></div>
+                <p
+                  class="my-auto group-data-[connected='false']:block opacity-80 hidden"
+                >
+                  Erro!
+                </p>
+                <p
+                  class="my-auto group-data-[connected='true']:block opacity-80 hidden"
+                >
+                  Conectado
+                </p>
+                <p
+                  class="my-auto group-data-[connected='']:block opacity-80 hidden"
+                >
+                  Conectando...
+                </p>
+              </div>
+              <p class="group-data-[connected='false']:block opacity-80 hidden">
+                Tentando novamente em <span data-name="timer"></span>s
+              </p>
+            </div>
+          </span>
+          <p class="ml-8 mt-4">Bits recebidos:</p>
+          <div class="mx-4 p-4 bg-slate-800/50">
+            <span id="receptor-bits" class="break-all"></span>
+          </div>
+          <p class="ml-8 mt-4">Texto decodificado:</p>
+          <div class="mx-4 p-4 bg-slate-800/50">
+            "<span id="receptor-text"></span>"
+          </div>
+        </div>
+        <div class="p-4 md:col-span-2 bg-slate-800/40 rounded-md">
+          <h2 class="text-blue-50/90 text-3xl">Gráfico</h2>
         </div>
       </div>
     </main>
