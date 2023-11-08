@@ -18,8 +18,8 @@
         <input class="px-3 py-1 bg-slate-800" type="text" id="text-to-send" />
         <button class="bg-slate-800/50 px-3 py-1">Send</button>
       </form>
-      <div class="grid grid-cols-3 w-full px-6">
-        <div class="border border-red-400">
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2 w-full px-6">
+        <div class="p-4 bg-slate-800/40 rounded-md">
           <span class="flex justify-between">
             <h2 class="text-blue-50/90 text-3xl">Transmissor</h2>
             <div
@@ -32,17 +32,17 @@
                   class="w-4 h-4 group-data-[connected='false']:bg-red-400 group-data-[connected='true']:bg-green-400 group-data-[connected='']:bg-yellow-400 rounded-full"
                 ></div>
                 <p
-                  class="my-auto group-data-[connected='false']:block opacity-90 hidden"
+                  class="my-auto group-data-[connected='false']:block opacity-80 hidden"
                 >
                   Erro!
                 </p>
                 <p
-                  class="my-auto group-data-[connected='true']:block opacity-90 hidden"
+                  class="my-auto group-data-[connected='true']:block opacity-80 hidden"
                 >
                   Conectado
                 </p>
                 <p
-                  class="my-auto group-data-[connected='']:block opacity-90 hidden"
+                  class="my-auto group-data-[connected='']:block opacity-80 hidden"
                 >
                   Conectando...
                 </p>
@@ -60,9 +60,12 @@
             <span id="transmitter-bits" class="break-all"></span>
           </div>
         </div>
-        <div></div>
-        <div class="border border-green-400">
-          <h2 class="text-blue-50/90 text-3xl">Receptor</h2>
+        <div class="p-4 row-span-2 bg-slate-800/40 rounded-md">
+          <h2 class="text-blue-50/90 text-3xl">Gráfico</h2>
+        </div>
+        <div class="p-4 bg-slate-800/40 rounded-md">
+          <span class="flex justify-between">
+            <h2 class="text-blue-50/90 text-3xl">Receptor</h2>
         </div>
       </div>
     </main>
