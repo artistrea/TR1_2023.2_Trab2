@@ -1,3 +1,5 @@
+import { setGraphBits } from "./graph";
+
 /**
  * @param {{
  *      type: "connected",
@@ -77,6 +79,8 @@ function setText(name, content) {
  * @param {string} content
  **/
 function setBits(name, content) {
+  if (name === "transmitter") setGraphBits(content);
+
   document.querySelector(`#${name}-bits`).innerHTML = content;
 }
 
