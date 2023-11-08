@@ -3,7 +3,7 @@ import { subscribe } from "./subscribe";
 const transmitterBaseUrl = "http://localhost:3001";
 
 subscribe(`${transmitterBaseUrl}/subscribe-interface`, "transmitter");
-// subscribe("http://localhost:3002/subscribe-interface", "receptor");
+subscribe("http://localhost:3002/subscribe-interface", "receptor");
 
 const textInput = document.querySelector("input#text-to-send");
 

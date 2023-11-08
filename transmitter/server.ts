@@ -9,6 +9,21 @@ app.use(express.json());
 app.use(cors());
 
 let interfaceClient: Response<any, Record<string, any>, number> | undefined;
+const receptorBaseUrl = "http://localhost:3002/";
+
+type ReceptorMessage = {
+  bits: string;
+};
+
+function sendDataToReceptor(data: ReceptorMessage) {
+  fetch(receptorBaseUrl, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+    body: JSON.stringify(data),
+  });
+}
 
 type InterfaceMessage =
   | {
@@ -48,12 +63,13 @@ app.post("/", (req, res) => {
     res.status(400).send({ message: "text sent should be string" });
     return;
   }
-  if (interfaceClient) sendDataToInterface({ type: "text", content: text });
+
+  sendDataToInterface({ type: "text", content: text });
 
   const encodedData = encode(text);
 
-  if (interfaceClient)
-    sendDataToInterface({ type: "bits", content: encodedData });
+  sendDataToInterface({ type: "bits", content: encodedData });
+  sendDataToReceptor({ bits: encodedData });
 
   const headers = {
     "Access-Control-Allow-Origin": "*",
