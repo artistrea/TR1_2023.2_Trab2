@@ -8,6 +8,7 @@ import { sendDataToReceptor } from "./sendDataToReceptor";
 // config:
 const port = 3001;
 const receptorBaseUrl = "http://localhost:3002";
+const defaultEncoding = "hamming";
 
 // setup:
 const app = express();
@@ -32,27 +33,18 @@ app.post("/", (req, res) => {
   const {
     data: { encoding, text },
   } = result;
-
-  // update interface:
   sendDataToInterface({ type: "text", content: text });
 
-  const encodedData = encode(text, encoding ?? "bipolar");
-
-  // update interface:
+  const encodedData = encode(text, encoding ?? defaultEncoding);
   sendDataToInterface({ type: "bits", content: encodedData });
 
-  // send encoded data to receptor:
+  // ye
   sendDataToReceptor(
-    { bits: encodedData, encoding: encoding ?? "bipolar" },
+    { bits: encodedData, encoding: encoding ?? defaultEncoding },
     receptorBaseUrl
   );
-
-  // allow cors so browser doesn't b*tch about it
-  const headers = {
-    "Access-Control-Allow-Origin": "*",
-  };
   // yay
-  res.status(200).header(headers).send({ message: "yay" });
+  res.status(200).send({ message: "yay" });
 });
 
 // endpoint for interface to be an observer and get updates

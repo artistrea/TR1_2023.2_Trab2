@@ -4,7 +4,7 @@ export const encodingSchema = z.enum(["bipolar", "hamming", "outra"]);
 
 export type EncodingType = z.infer<typeof encodingSchema>;
 
-export function encode(data: string, _type: EncodingType): string {
+export function encode(data: string, _encodingType: EncodingType): string {
   let out = "";
 
   for (let i = 0; i < data.length; i++) {
