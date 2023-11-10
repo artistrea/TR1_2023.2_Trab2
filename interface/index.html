@@ -11,6 +11,26 @@
     <main class="bg-slate-900 min-h-screen w-full text-blue-50">
       <h1 class="text-3xl p-6 font-bold">Interface para o Trabalho 2</h1>
       <form
+        id="send-encoding-form"
+        class="flex flex-col gap-1 w-max mx-5 mt-5 px-5"
+      >
+        <label for="encoding-to-send">Escolha o tipo de encoding: </label>
+        <label
+          for="encoding-to-send"
+          class="relative after:absolute after:right-4 after:top-[57%] after:border-l-transparent after:border-r-transparent after:border-l-4 after:border-r-4 after:border-t-4 before:absolute before:right-4 before:top-[42%] before:border-l-transparent before:border-r-transparent before:border-l-4 before:border-r-4 before:border-b-4 after:pointer-events-none before:pointer-events-none"
+        >
+          <select
+            name="encoding-to-send"
+            class="w-full h-full bg-slate-800 appearance-none cursor-pointer p-2"
+            id="encoding-to-send"
+          >
+            <option value="hamming">hamming</option>
+            <option value="bipolar">bipolar</option>
+            <option value="outra">outra</option>
+          </select>
+        </label>
+      </form>
+      <form
         id="send-text-form"
         class="flex flex-col gap-1 w-max m-5 p-5 relative before:border before:absolute before:right-0 before:bottom-0 before:top-1/2 after:[content:'>'] after:absolute after:-right-[10px] after:-bottom-3 after:rotate-90 after:text-3xl"
       >
@@ -56,7 +76,9 @@
           <div class="mx-4 p-4 bg-slate-800/50">
             "<span id="transmitter-text"></span>"
           </div>
-          <p class="ml-8 mt-4">Texto codificado:</p>
+          <p class="ml-8 mt-4">
+            Codificação em <span id="transmitter-encoding">...</span>:
+          </p>
           <div class="mx-4 p-4 bg-slate-800/50">
             <span id="transmitter-bits" class="break-all"></span>
           </div>
@@ -98,7 +120,9 @@
           <div class="mx-4 p-4 bg-slate-800/50">
             <span id="receptor-bits" class="break-all"></span>
           </div>
-          <p class="ml-8 mt-4">Texto decodificado:</p>
+          <p class="ml-8 mt-4">
+            Decodificação em <span id="receptor-encoding">...</span>:
+          </p>
           <div class="mx-4 p-4 bg-slate-800/50">
             "<span id="receptor-text"></span>"
           </div>

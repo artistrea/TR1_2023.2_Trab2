@@ -1,11 +1,16 @@
 import type { Response, Request, Query } from "express-serve-static-core";
+import type { EncodingType } from "./decode";
 
 type Res = Response<any, Record<string, any>, number>;
 type Req = Request<{}, any, any, Query, Record<string, any>>;
 
 let interfaceClient: Res | undefined;
 
-export function subscribeInterface(request: Req, response: Res) {
+export function subscribeInterface(
+  request: Req,
+  response: Res,
+  startEncoding: EncodingType
+) {
   const headers = {
     "Content-Type": "text/event-stream",
     Connection: "keep-alive",
@@ -21,7 +26,7 @@ export function subscribeInterface(request: Req, response: Res) {
   }
   interfaceClient = response;
   console.log("Client connected");
-  sendDataToInterface({ type: "connected" });
+  sendDataToInterface({ type: "connected", startEncoding });
 
   // lost connection:
   request.on("close", () => {
@@ -37,6 +42,7 @@ export function sendDataToInterface(data: InterfaceMessage) {
 type InterfaceMessage =
   | {
       type: "connected";
+      startEncoding: EncodingType;
     }
   | {
       type: "text";
@@ -45,4 +51,8 @@ type InterfaceMessage =
   | {
       type: "bits";
       content: string;
+    }
+  | {
+      type: "encoding";
+      content: EncodingType;
     };

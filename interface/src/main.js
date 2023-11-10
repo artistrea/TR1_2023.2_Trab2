@@ -18,3 +18,24 @@ document.querySelector("form#send-text-form").onsubmit = (e) => {
     },
   });
 };
+
+const encodingInput = document.querySelector("select#encoding-to-send");
+encodingInput.value = "hamming";
+
+encodingInput.onchange = (e) => {
+  fetch(`${transmitterBaseUrl}/change-encoding`, {
+    method: "POST",
+    body: JSON.stringify({ encoding: e.target.value }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  });
+
+  fetch(`${receptorBaseUrl}/change-encoding`, {
+    method: "POST",
+    body: JSON.stringify({ encoding: e.target.value }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  });
+};

@@ -3,6 +3,7 @@ import { setGraphBits } from "./chart";
 /**
  * @param {{
  *      type: "connected",
+ *      startEncoding: string
  *    }
  *  | {
  *      type: "text";
@@ -11,15 +12,22 @@ import { setGraphBits } from "./chart";
  *  | {
  *      type: "bits";
  *      content: string;
- *    }} data
+ *    }
+ *  | {
+ *      type: "encoding";
+ *      content: string;
+ *  }} data
  **/
 function listenToMessage(data, name) {
   console.warn("warning: ", data);
-  const { type, content } = data;
+  const { type, content, startEncoding } = data;
 
-  if (type === "connected") return;
+  if (type === "connected") {
+    setEncoding(name, startEncoding);
+  }
   if (type === "text") setText(name, content);
   if (type === "bits") setBits(name, content);
+  if (type === "encoding") setEncoding(name, content);
 }
 
 /**
@@ -72,6 +80,14 @@ function setTimerValue(name, value) {
  **/
 function setText(name, content) {
   document.querySelector(`#${name}-text`).innerHTML = content;
+}
+
+/**
+ * @param {"transmitter" | "receptor"} name
+ * @param {string} content
+ **/
+function setEncoding(name, content) {
+  document.querySelector(`#${name}-encoding`).innerHTML = content;
 }
 
 /**
