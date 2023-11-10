@@ -52,8 +52,6 @@ app.get("/subscribe-interface", (req, res) =>
 app.post("/change-encoding", (req, res) => {
   const result = z.object({ encoding: encodingSchema }).safeParse(req.body);
 
-  console.log("req.body", req.body);
-
   if (!result.success) {
     const { error } = result;
     res.status(400).send({ message: error.flatten() });

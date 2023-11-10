@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "nodemon src/server.ts --watch src/**/*.ts"
+    "dev": "nodemon src/server.ts --watch src/"
   },
   "devDependencies": {
     "@types/cors": "^2.8.16",
