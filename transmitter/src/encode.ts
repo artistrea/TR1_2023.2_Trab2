@@ -8,7 +8,7 @@ export function encode(data: string, _encodingType: EncodingType): string {
   let out = "";
 
   for (let i = 0; i < data.length; i++) {
-    let num = data.charCodeAt(0);
+    let num = data.charCodeAt(i);
     let charBits = "";
     let j = 8;
     while (j--) {

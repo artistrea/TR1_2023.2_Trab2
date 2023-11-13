@@ -2,12 +2,12 @@ import Plotly from "plotly.js-dist-min";
 
 const graphDiv = document.getElementById("graph");
 
-function genCosUntil(n) {
+function cossine(precision) {
   const x = [];
   const y = [];
-  for (let i = 0; i < n; i++) {
-    x.push(i / n);
-    y.push(Math.cos((i * 2 * Math.PI) / n));
+  for (let i = 0; i < precision; i++) {
+    x.push(i / precision);
+    y.push(Math.cos((i * 2 * Math.PI) / precision));
   }
 
   return { x, y };
@@ -25,7 +25,7 @@ export function setGraphBits(data) {
 }
 
 /**
- * @param {"8QAM" | "outro la" | "o ultimo"} type
+ * @param {"8QAM" | "ASK" | "FSK"} type
  */
 export function setGraphType(type) {
   graphType = type;
@@ -33,7 +33,7 @@ export function setGraphType(type) {
 }
 
 function replot() {
-  const { x, y } = genCosUntil(300);
+  const { x, y } = cossine(300);
 
   Plotly.newPlot(
     graphDiv,
