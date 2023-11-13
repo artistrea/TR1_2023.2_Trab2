@@ -8,13 +8,13 @@ export function encode(data: string, _encodingType: EncodingType): string {
   let out = "";
 
   for (let i = 0; i < data.length; i++) {
-    let num = data.charCodeAt(i);
+    let charAscii = data.charCodeAt(i);
     let charBits = "";
     let j = 8;
     while (j--) {
-      if (num & 1) charBits = "1" + charBits;
+      if (charAscii & 1) charBits = "1" + charBits;
       else charBits = "0" + charBits;
-      num >>= 1;
+      charAscii >>= 1;
     }
     out += charBits;
   }
