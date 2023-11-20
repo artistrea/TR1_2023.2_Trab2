@@ -7,7 +7,7 @@ import { onReceivedText } from "./onReceivedText";
 
 // config
 const port = 3002;
-let encoding: EncodingType = "hamming";
+let encoding: EncodingType = "NRZ-Polar";
 let gBits: string | undefined;
 
 // setup

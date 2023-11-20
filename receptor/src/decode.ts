@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const encodingSchema = z.enum(["bipolar", "hamming", "outra"]);
+export const encodingSchema = z.enum(["NRZ-Polar", "Manchester", "Bipolar"]);
 
 export type EncodingType = z.infer<typeof encodingSchema>;
 

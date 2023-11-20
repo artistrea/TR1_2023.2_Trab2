@@ -8,7 +8,7 @@ import { sendDataToReceptor } from "./sendDataToReceptor";
 // config:
 const port = 3001;
 const receptorBaseUrl = "http://localhost:3002";
-let encoding: EncodingType = "hamming";
+let encoding: EncodingType = "NRZ-Polar";
 let gText: string | undefined;
 
 // setup:
