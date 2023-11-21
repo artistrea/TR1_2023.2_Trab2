@@ -13,19 +13,22 @@ function cossine(precision, freq=1) {
   return { xt, yt };
 }
 
-function sine(precision, freq=1) {
+function sine(freq=1, fase=0, precision=300) {
   const xt = [];
   const yt = [];
   for (let i = 0; i < precision; i++) {
     xt.push(i / precision);
-    yt.push(Math.sin((i * 2 * Math.PI * freq) / precision));
+    yt.push(Math.sin((i * 2 * Math.PI * freq) / precision + fase));
   }
   return { xt, yt };
 }
 
-function modulation(graphBits = "10110001", graphType="FSK") {
-  const { xt, yt } = sine(300);
-  const {xt: xt_05, yt: yt_05} = sine(300,2);
+function modulation(graphBits = "000001010", graphType="8QAM") {
+  const { xt, yt } = sine();
+  const {xt: xt_05, yt: yt_05} = sine(2);
+  const {xt: xt_p_PI0_5, yt: yt_p_PI0_5} = sine(1,Math.PI*0.5);
+  const {xt: xt_p_PI, yt: yt_p_PI} = sine(1,Math.PI);
+  const {xt: xt_p_PI1_5, yt: yt_p_PI1_5} = sine(1,Math.PI*1.5);
   const x = []
   const y = []
   switch(graphType) {
@@ -44,11 +47,21 @@ function modulation(graphBits = "10110001", graphType="FSK") {
     case("8QAM"):
       while(graphBits.length % 3 != 0) graphBits += 0 // garantir que temos simbolos completos
       for (let i = 0; i < graphBits.length; i+=3) {
+        let j = i/3;
         switch(graphBits.slice(i,i+3)){
           case("000"):
-          x.push(...xt.map((x)=>x+i))
-          y.push(...yt.map((y)=>y/2))
+            x.push(...xt.map((x)=>x+j))
+            y.push(...yt.map((y)=>y/2))
           break;
+          case("001"):
+            x.push(...xt.map((x)=>x+j))
+            y.push(...yt.map((y)=>y))
+          break;
+          case("010"):
+            x.push(...xt_p_PI0_5.map((x)=>x+j))
+            y.push(...yt_p_PI0_5.map((y)=>y/2))
+          break;
+          
         }
       }
     break;
