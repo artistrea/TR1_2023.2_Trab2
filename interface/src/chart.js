@@ -23,9 +23,9 @@ function sine(freq=1, fase=0, precision=300) {
   return { xt, yt };
 }
 
-function modulation(graphBits = "000001010", graphType="8QAM") {
+function modulation(graphBits = "101100001000010011110111", graphType="8QAM") {
   const { xt, yt } = sine();
-  const {xt: xt_05, yt: yt_05} = sine(2);
+  const {xt: xt_2f, yt: yt_2f} = sine(2);
   const {xt: xt_p_PI0_5, yt: yt_p_PI0_5} = sine(1,Math.PI*0.5);
   const {xt: xt_p_PI, yt: yt_p_PI} = sine(1,Math.PI);
   const {xt: xt_p_PI1_5, yt: yt_p_PI1_5} = sine(1,Math.PI*1.5);
@@ -40,8 +40,8 @@ function modulation(graphBits = "000001010", graphType="8QAM") {
     break;
     case("FSK"):
     for (let i = 0; i < graphBits.length; i++) {
-        x.push(...(graphBits[i] === '1' ? xt_05 : xt).map((x)=>x+i))
-        y.push(...(graphBits[i] === '1' ? yt_05 : yt))
+        x.push(...(graphBits[i] === '1' ? xt_2f : xt).map((x)=>x+i))
+        y.push(...(graphBits[i] === '1' ? yt_2f : yt))
       }
     break;
     case("8QAM"):
@@ -61,7 +61,26 @@ function modulation(graphBits = "000001010", graphType="8QAM") {
             x.push(...xt_p_PI0_5.map((x)=>x+j))
             y.push(...yt_p_PI0_5.map((y)=>y/2))
           break;
-          
+          case("011"):
+            x.push(...xt_p_PI0_5.map((x)=>x+j))
+            y.push(...yt_p_PI0_5.map((y)=>y))
+          break;
+          case("100"):
+            x.push(...xt_p_PI.map((x)=>x+j))
+            y.push(...yt_p_PI.map((y)=>y/2))
+          break;
+          case("101"):
+            x.push(...xt_p_PI.map((x)=>x+j))
+            y.push(...yt_p_PI.map((y)=>y))
+          break;
+          case("110"):
+            x.push(...xt_p_PI1_5.map((x)=>x+j))
+            y.push(...yt_p_PI1_5.map((y)=>y/2))
+          break;
+          case("111"):
+            x.push(...xt_p_PI1_5.map((x)=>x+j))
+            y.push(...yt_p_PI1_5.map((y)=>y))
+          break; 
         }
       }
     break;
