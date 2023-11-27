@@ -1,4 +1,4 @@
-import { setGraphBits } from "./chart";
+import { setChartBits } from "./chart";
 
 
 
@@ -102,7 +102,7 @@ function setEncoding(name, content) {
  * @param {string} content
  **/
 function setBits(name, content) {
-  if (name === "transmitter") setGraphBits(content);
+  if (name === "transmitter") setChartBits(content);
 
   document.querySelector(`#${name}-bits`).innerHTML = content;
 }

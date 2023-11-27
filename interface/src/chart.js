@@ -81,14 +81,15 @@ function modulation(chartBits, chartType) {
   return { x, y }
 }
 
-let chartBits = "10110001";
+let chartBits = "101100001000010011110111";
 let chartType = "8QAM";
 
 /**
  * @param {string} data - bit sequence in string
  */
 export function setChartBits(data) {
-  chartBits = data;
+  // [TODO]:
+  // chartBits = data;
   replot();
 }
 
@@ -100,8 +101,11 @@ export function setChartType(type) {
   replot();
 }
 
+const chartTitleDiv = document.querySelector("#chart-title")
+
 function replot() {
   const {x, y} = modulation(chartBits ,chartType)
+  chartTitleDiv.innerHTML =  `Modulação em ${chartType}`
   Plotly.newPlot(
     chartDiv,
     [
@@ -111,6 +115,7 @@ function replot() {
       },
     ],
     {
+      title: `Modulação em ${chartType}`,
       plot_bgcolor: "rgb(15 23 42 / 0.5)",
       paper_bgcolor: "rgb(15 23 42 / 0.5)",
       colorway: ["rgb(239 246 255)"],
