@@ -6,7 +6,7 @@ export type EncodingType = z.infer<typeof encodingSchema>;
 
 export function decode(data: string, _encodingType: EncodingType): string {
   let outIn = "";
-
+  outIn = data;
   const regex = /V|v/gi;
   switch(_encodingType){
     case "NRZ-Polar":
@@ -16,22 +16,17 @@ export function decode(data: string, _encodingType: EncodingType): string {
       }
       outIn = outIn.replace(regex, b => codif[b]); break
     case "Manchester":
+      let aux = ""
       for (let i = 0; i < outIn.length; i += 2) {
-        let aux = ""
-        if (outIn[0] === '0' && outIn[1] === '1') {
+        if (outIn[i] === '0' && outIn[i+1] === '1') {
           aux += '0'
-        } else if (outIn[0] === '1' && outIn[1] === '0') {
+        } else if (outIn[i] === '1' && outIn[i+1] === '0') {
           aux += '1'
         } else {
           aux += "erroNaManchester"
         }
-        outIn = aux; break
       }
-      var codif: {[key:string]: string} = {
-        0:"01",
-        1:"10"
-      }
-      outIn = outIn.replace(regex, b => codif[b]); break
+      outIn = aux; break
     case "Bipolar":
       var codif: {[key:string]: string} = {
         V:"1",
