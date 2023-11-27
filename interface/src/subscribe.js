@@ -14,6 +14,10 @@ import { setGraphBits } from "./chart";
  *      content: string;
  *    }
  *  | {
+ *       type: "encoded-bits";
+ *       content: string;
+ *    }
+ *  | {
  *      type: "encoding";
  *      content: string;
  *  }} data
@@ -24,9 +28,11 @@ function listenToMessage(data, name) {
 
   if (type === "connected") {
     setEncoding(name, startEncoding);
+    document.querySelector("select").value = startEncoding;
   }
   if (type === "text") setText(name, content);
   if (type === "bits") setBits(name, content);
+  if (type === "encoded-bits") setEncodedBits(name, content);
   if (type === "encoding") setEncoding(name, content);
 }
 
@@ -88,6 +94,14 @@ function setText(name, content) {
  **/
 function setEncoding(name, content) {
   document.querySelector(`#${name}-encoding`).innerHTML = content;
+}
+
+/**
+ * @param {"transmitter" | "receptor"} name
+ * @param {string} content
+ **/
+function setEncodedBits(name, content) {
+  document.querySelector(`#${name}-encoded-bits`).innerHTML = content;
 }
 
 /**

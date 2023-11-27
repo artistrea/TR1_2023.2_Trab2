@@ -9,7 +9,6 @@ import { textFromBits } from "./textFromBits";
 // config
 const port = 3002;
 let encoding: EncodingType = "NRZ-Polar";
-let gBits: string | undefined;
 
 // setup
 const app = express();
@@ -34,9 +33,10 @@ app.post("/", (req, res) => {
   const {
     data: { bits },
   } = result;
-  gBits = bits;
 
-  // sendDataToInterface({ type: "encodedBits", content: bits });
+  sendDataToInterface({ type: "encoding", content: encoding });
+
+  sendDataToInterface({ type: "encoded-bits", content: bits });
 
   const decodedbits = decode(bits, encoding);
 
@@ -68,14 +68,6 @@ app.post("/change-encoding", (req, res) => {
   encoding = result.data.encoding;
 
   res.status(200).send();
-
-  sendDataToInterface({ type: "encoding", content: encoding });
-
-  if (gBits) {
-    const text = decode(gBits, encoding);
-
-    sendDataToInterface({ type: "text", content: text });
-  }
 });
 
 app.listen(port, () => {
