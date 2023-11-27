@@ -25,7 +25,7 @@ function modulation(chartBits, chartType) {
     case("ASK"):
     for (let i = 0; i < chartBits.length; i++) {
       x.push(...xt.map((x)=>x+i))
-      y.push(...yt.map((y)=> chartBits[i] === '1' ? y : y))
+      y.push(...yt.map((y)=> chartBits[i] === '1' ? y : 0))
     }
     break;
     case("FSK"):
