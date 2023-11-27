@@ -4,6 +4,7 @@ import { z } from "zod";
 import { sendDataToInterface, subscribeInterface } from "./interfaceComms";
 import { encodingSchema, encode, type EncodingType } from "./encode";
 import { sendDataToReceptor } from "./sendDataToReceptor";
+import { bitsFromText } from "./bitsFromText";
 
 // config:
 const port = 3001;
@@ -37,8 +38,11 @@ app.post("/", (req, res) => {
   } = result;
   sendDataToInterface({ type: "text", content: text });
 
-  const encodedData = encode(text, encoding);
-  sendDataToInterface({ type: "bits", content: encodedData });
+  const bits = bitsFromText(text);
+  sendDataToInterface({ type: "bits", content: bits });
+
+  const encodedData = encode(bits, encoding);
+  // sendDataToInterface({ type: "encodedBits", content: encodedData });
 
   // ye
   sendDataToReceptor(

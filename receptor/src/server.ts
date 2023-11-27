@@ -4,6 +4,7 @@ import { sendDataToInterface, subscribeInterface } from "./interfaceComms";
 import { type EncodingType, decode, encodingSchema } from "./decode";
 import { z } from "zod";
 import { onReceivedText } from "./onReceivedText";
+import { textFromBits } from "./textFromBits";
 
 // config
 const port = 3002;
@@ -16,7 +17,9 @@ app.use(express.json());
 app.use(cors());
 
 const bodySchema = z.object({
-  bits: z.string().regex(/^(0|1)+$/, "String should contain only 1's and 0's"),
+  bits: z
+    .string()
+    .regex(/^(0|1|v|V)+$/, "String should contain only 1,0,v and V"),
 });
 
 app.post("/", (req, res) => {
@@ -33,9 +36,13 @@ app.post("/", (req, res) => {
   } = result;
   gBits = bits;
 
-  sendDataToInterface({ type: "bits", content: bits });
+  // sendDataToInterface({ type: "encodedBits", content: bits });
 
-  const text = decode(bits, encoding);
+  const decodedbits = decode(bits, encoding);
+
+  sendDataToInterface({ type: "bits", content: decodedbits });
+
+  const text = textFromBits(decodedbits);
 
   sendDataToInterface({ type: "text", content: text });
 
