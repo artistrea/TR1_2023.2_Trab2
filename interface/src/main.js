@@ -20,7 +20,7 @@ document.querySelector("form#send-text-form").onsubmit = (e) => {
 };
 
 const encodingInput = document.querySelector("select#encoding-to-send");
-encodingInput.value = "hamming";
+encodingInput.value = "NRZ-Polar";
 
 encodingInput.onchange = (e) => {
   fetch(`${transmitterBaseUrl}/change-encoding`, {
