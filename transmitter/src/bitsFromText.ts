@@ -3,7 +3,7 @@ export function bitsFromText(data: string) {
 
   for (let i = 0; i < data.length; i++) {
     let charAscii = data.charCodeAt(i);
-    let charBits = charAscii.toString(2);
+    let charBits = charAscii.toString(2).padStart(8, "0");
 
     bits += charBits;
   }
