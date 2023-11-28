@@ -16,7 +16,9 @@ app.use(express.json());
 app.use(cors());
 
 const bodySchema = z.object({
-  bits: z.string().regex(/^(0|1)+$/, "String should contain only 1's and 0's"),
+  bits: z
+    .string()
+    .regex(/^(0|1|v|V)+$/, "String should contain only 1's and 0's"),
 });
 
 app.post("/", (req, res) => {
