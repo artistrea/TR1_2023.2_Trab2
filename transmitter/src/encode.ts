@@ -29,8 +29,8 @@ export function encode(data: string, _encodingType: EncodingType): string {
       out = out.replace(regex, b => codif[b]); break
     case "Manchester":
       var codif: {[key:string]: string} = {
-        0:"01",
-        1:"10"
+        0:"0V",
+        1:"V0"
       }
       out = out.replace(regex, b => codif[b]); break
     case "Bipolar":
