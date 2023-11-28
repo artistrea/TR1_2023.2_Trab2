@@ -4,18 +4,25 @@ export const ECSchema = z.enum(["Paridade", "CRC"]);
 
 export type ErrorControlType = z.infer<typeof ECSchema>;
 
-export function getErrorControl(data: string, _errorControlType: ErrorControlType): string {
+export function addTrailer(data: string, _errorControlType: ErrorControlType): string {
   
     data = "100100000";
-    const polynomial = "1101";
-
-
+    let data_trailer : string = data;
+    let trailer : string;
+    
     switch(_errorControlType){
         case "CRC":
-
+            const polynomial = "1101";
+            
+            trailer = ""
         break;
-    }
+        case "Paridade":
+
+            trailer = ""
+        break;
+        }
+    data_trailer += trailer 
     console.log(9)
 
-    return "";
+    return data_trailer;
 }
