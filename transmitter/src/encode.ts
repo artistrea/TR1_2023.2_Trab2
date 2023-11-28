@@ -16,8 +16,8 @@ export function encode(bits: string, encodingType: EncodingType): string {
       break;
     case "Manchester":
       var codif: { [key: string]: string } = {
-        0: "01",
-        1: "10",
+        0: "0V",
+        1: "V0",
       };
       bits = bits.replace(regex, (b) => codif[b]);
       break;
