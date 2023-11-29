@@ -53,6 +53,10 @@ type InterfaceMessage =
       content: string;
     }
   | {
+      type: "encoded-bits";
+      content: string;
+    }
+  | {
       type: "encoding";
       content: EncodingType;
     };

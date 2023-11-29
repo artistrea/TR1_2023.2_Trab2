@@ -4,12 +4,12 @@ import { z } from "zod";
 import { sendDataToInterface, subscribeInterface } from "./interfaceComms";
 import { encodingSchema, encode, type EncodingType } from "./encode";
 import { sendDataToReceptor } from "./sendDataToReceptor";
+import { bitsFromText } from "./bitsFromText";
 
 // config:
 const port = 3001;
 const receptorBaseUrl = "http://localhost:3002";
 let encoding: EncodingType = "NRZ-Polar";
-let gText: string | undefined;
 
 // setup:
 const app = express();
@@ -35,10 +35,15 @@ app.post("/", (req, res) => {
   const {
     data: { text },
   } = result;
+  sendDataToInterface({ type: "encoding", content: encoding });
+
   sendDataToInterface({ type: "text", content: text });
 
-  const encodedData = encode(text, encoding);
-  sendDataToInterface({ type: "bits", content: encodedData });
+  const bits = bitsFromText(text);
+  sendDataToInterface({ type: "bits", content: bits });
+
+  const encodedData = encode(bits, encoding);
+  sendDataToInterface({ type: "encoded-bits", content: encodedData });
 
   // ye
   sendDataToReceptor(
@@ -67,14 +72,6 @@ app.post("/change-encoding", (req, res) => {
   encoding = result.data.encoding;
 
   res.status(200).send();
-
-  sendDataToInterface({ type: "encoding", content: encoding });
-
-  if (gText) {
-    const bits = encode(gText, encoding);
-
-    sendDataToInterface({ type: "bits", content: bits });
-  }
 });
 
 app.listen(port, () => {
