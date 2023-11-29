@@ -1,0 +1,12 @@
+{
+  "name": "tr1_2023.2_trab2",
+  "private": true,
+  "workspaces":[
+    "interface",
+    "receptor",
+    "transmitter"
+  ],
+  "scripts": {
+    "dev": "turbo dev --parallel"
+  }
+}
