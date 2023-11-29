@@ -4,11 +4,11 @@ import { sendDataToInterface, subscribeInterface } from "./interfaceComms";
 import { type EncodingType, decode, encodingSchema } from "./decode";
 import { z } from "zod";
 import { onReceivedText } from "./onReceivedText";
+import { textFromBits } from "./textFromBits";
 
 // config
 const port = 3002;
 let encoding: EncodingType = "NRZ-Polar";
-let gBits: string | undefined;
 
 // setup
 const app = express();
@@ -18,7 +18,7 @@ app.use(cors());
 const bodySchema = z.object({
   bits: z
     .string()
-    .regex(/^(0|1|v|V)+$/, "String should contain only 1's and 0's"),
+    .regex(/^(0|1|v|V)+$/, "String should contain only 1,0,v and V"),
 });
 
 app.post("/", (req, res) => {
@@ -33,11 +33,16 @@ app.post("/", (req, res) => {
   const {
     data: { bits },
   } = result;
-  gBits = bits;
 
-  sendDataToInterface({ type: "bits", content: bits });
+  sendDataToInterface({ type: "encoding", content: encoding });
 
-  const text = decode(bits, encoding);
+  sendDataToInterface({ type: "encoded-bits", content: bits });
+
+  const decodedbits = decode(bits, encoding);
+
+  sendDataToInterface({ type: "bits", content: decodedbits });
+
+  const text = textFromBits(decodedbits);
 
   sendDataToInterface({ type: "text", content: text });
 
@@ -63,14 +68,6 @@ app.post("/change-encoding", (req, res) => {
   encoding = result.data.encoding;
 
   res.status(200).send();
-
-  sendDataToInterface({ type: "encoding", content: encoding });
-
-  if (gBits) {
-    const text = decode(gBits, encoding);
-
-    sendDataToInterface({ type: "text", content: text });
-  }
 });
 
 app.listen(port, () => {

@@ -19,8 +19,8 @@ document.querySelector("form#send-text-form").onsubmit = (e) => {
   });
 };
 
+// initial value by subscribe()
 const encodingInput = document.querySelector("select#encoding-to-send");
-encodingInput.value = "NRZ-Polar";
 
 encodingInput.onchange = (e) => {
   fetch(`${transmitterBaseUrl}/change-encoding`, {

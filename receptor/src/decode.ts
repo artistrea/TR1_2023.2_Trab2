@@ -18,9 +18,9 @@ export function decode(data: string, _encodingType: EncodingType): string {
     case "Manchester":
       let aux = ""
       for (let i = 0; i < outIn.length; i += 2) {
-        if (outIn[i] === '0' && outIn[i+1] === '1') {
+        if (outIn[i] === '0' && outIn[i+1] === 'V') {
           aux += '0'
-        } else if (outIn[i] === '1' && outIn[i+1] === '0') {
+        } else if (outIn[i] === 'V' && outIn[i+1] === '0') {
           aux += '1'
         } else {
           aux += "erroNaManchester"
