@@ -5,7 +5,7 @@ import { sendDataToInterface, subscribeInterface } from "./interfaceComms";
 import { encodingSchema, encode, type EncodingType } from "./encode";
 import { sendDataToReceptor } from "./sendDataToReceptor";
 import { bitsFromText } from "./bitsFromText";
-import { ErrorControlType, addTrailer } from "./errorControl";
+import { ErrorControlType, addEDC, hamming } from "./errorControl";
 
 // config:
 const port = 3001;
@@ -42,9 +42,10 @@ app.post("/", (req, res) => {
   sendDataToInterface({ type: "text", content: text });
 
   const bits = bitsFromText(text);
-  const dataTrailer = addTrailer(bits, errorControl);
+  // const data = addEDC(bits, errorControl);
+  const data = hamming(bits);
   
-  sendDataToInterface({ type: "bits", content: dataTrailer });
+  sendDataToInterface({ type: "bits", content: data });
 
 
 
