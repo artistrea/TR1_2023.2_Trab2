@@ -45,25 +45,32 @@ export function addEDC(data: string, errorControlType: ErrorControlType): string
 
 export function hamming(data: string): string {
     data = "1101001"
+    //PP1P101P001
     const log2 = ((x:number)=>Math.ceil(Math.log2(x)))
     const dataLen = data.length
     let hammingData = data;
-    
     let verfBitsLen = log2(dataLen)
     if(verfBitsLen !== log2(dataLen + verfBitsLen)){
         verfBitsLen++
     }
     const hammingDataLen =  dataLen + verfBitsLen
-
+    
     let cut:number;
     for(let i=0;i<verfBitsLen;i++){
         cut = 2**i-1
         hammingData = hammingData.slice(0,cut) + "P" + hammingData.slice(cut)
     }
+    let sum=0;
+    let window:number;
     for(let i=0;i<verfBitsLen;i++){
-        for(const bit of hammingData){
-            
+        sum = 0
+        window = 2**(i)
+        for(let j=window-1;j<hammingDataLen;j+=2*window){
+            for(let k=j;k<j+window;k++){
+                sum += (hammingData[k]=="1")? 1:0
+            }
         }
+        hammingData = hammingData.replace("P",((sum%2===0)?"0":"1"))
     }
     return hammingData
 }
