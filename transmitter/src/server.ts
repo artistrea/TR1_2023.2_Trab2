@@ -5,11 +5,13 @@ import { sendDataToInterface, subscribeInterface } from "./interfaceComms";
 import { encodingSchema, encode, type EncodingType } from "./encode";
 import { sendDataToReceptor } from "./sendDataToReceptor";
 import { bitsFromText } from "./bitsFromText";
+import { ErrorControlType, addEDC, hamming } from "./errorControl";
 
 // config:
 const port = 3001;
 const receptorBaseUrl = "http://localhost:3002";
 let encoding: EncodingType = "NRZ-Polar";
+let errorControl: ErrorControlType = "CRC";
 
 // setup:
 const app = express();
@@ -40,7 +42,12 @@ app.post("/", (req, res) => {
   sendDataToInterface({ type: "text", content: text });
 
   const bits = bitsFromText(text);
-  sendDataToInterface({ type: "bits", content: bits });
+  // const data = addEDC(bits, errorControl);
+  const data = hamming(bits);
+  
+  sendDataToInterface({ type: "bits", content: data });
+
+
 
   const encodedData = encode(bits, encoding);
   sendDataToInterface({ type: "encoded-bits", content: encodedData });
