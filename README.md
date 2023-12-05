@@ -6,7 +6,7 @@ simulando camada fisica com um transmissor, um receptor e uma interface visualiz
 
 Primeiro, é **necessário** ter **node** e **npm** (_node package manager_) em seu sistema. Geralmente os dois são instalados juntos. Para verificar se já os possui, rode `npm --version` e, se a resposta for um número, você possui ambos instalados.
 
-Então basta **instalar** os pacotes do **projeto**. Para isso, acesse as pastas `/interface`,`/transmitter` e `/receptor`, e então rode `npm install` em **cada um** deles.
+Então basta **instalar** os pacotes do **projeto**. Para isso, rode `npm install` na raíz do projeto.
 
 ### Como instalar Node?
 
@@ -23,8 +23,10 @@ nvm install --lts
 
 ## Como rodar?
 
-Caso já tenha **node** e rodado os `npm install` necessários, basta seguir a instrução:
+Caso já tenha **node** e rodado `npm install` na raíz do projeto, basta rodar:
 
-Acesse as pastas `/interface`,`/transmitter` e `/receptor` em terminais separados, então rode `npm run dev` em cada um deles.
+```bash
+npm run dev
+```
 
 Na configuração inicial do projeto, a interface está sendo servida na porta `5173`, o transmissor está na `3001` e o receptor na `3002` do `http://localhost`.
