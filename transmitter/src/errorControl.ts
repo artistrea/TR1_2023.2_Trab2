@@ -5,7 +5,7 @@ export const ECSchema = z.enum(["Bit de paridade par", "CRC"]);
 export type ErrorControlType = z.infer<typeof ECSchema>;
 
 export function addEDC(data: string, errorControlType: ErrorControlType): string {
-    data = "100100000"
+    //data = "100100000"
     let dataEDC : string = data;
     let edc : string="";
     
@@ -44,7 +44,7 @@ export function addEDC(data: string, errorControlType: ErrorControlType): string
 }
 
 export function hamming(data: string): string {
-    data = "1101001"
+    //data = "1101001"
     //PP1P101P001
     const log2 = ((x:number)=>Math.ceil(Math.log2(x)))
     const dataLen = data.length
