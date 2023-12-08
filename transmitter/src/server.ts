@@ -6,6 +6,7 @@ import { encodingSchema, encode, type EncodingType } from "./encode";
 import { sendDataToReceptor } from "./sendDataToReceptor";
 import { bitsFromText } from "./bitsFromText";
 import { ErrorControlType, addEDC, hamming } from "./errorControl";
+import { addBitCount } from "./bitCounting";
 
 // config:
 const port = 3001;
@@ -42,8 +43,10 @@ app.post("/", (req, res) => {
   sendDataToInterface({ type: "text", content: text });
 
   const bits = bitsFromText(text);
-  // const data = addEDC(bits, errorControl);
-  const data = hamming(bits);
+  //const data = addEDC(bits, errorControl);
+  //const data = hamming(bits);
+  const data = addBitCount(bits);
+  //const data = bits;
   
   sendDataToInterface({ type: "bits", content: data });
 
