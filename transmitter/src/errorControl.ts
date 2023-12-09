@@ -12,9 +12,7 @@ export function addEDC(data: string, errorControlType: ErrorControlType): string
     switch(errorControlType){
         case "CRC":
             const polynomial = "1101";
-            // const polynomial = "11101101101110001000001100100000"; 
-            // https://edisciplinas.usp.br/pluginfile.php/5809966/mod_resource/content/1/REDES_Aula09.pdf
-            // https://paginas.fe.up.pt/~ee06166/documentos/Deteccao_de_erros.pdf
+            // const polynomial = "10000010011000001000111011011011";
             const ord = polynomial.length
 
             for(var i=0;i<ord;i++) dataEDC += '0'  
@@ -38,7 +36,7 @@ export function addEDC(data: string, errorControlType: ErrorControlType): string
             edc = (sum%2===0)? "0":"1"
         break;
         }
-    dataEDC = data +"-"+ edc // DELETE: "-"
+    dataEDC = data + edc
 
     return dataEDC;
 }
@@ -78,7 +76,6 @@ export function hamming(data: string): string {
 
 function xor(s1:string,s2:string): string {
     let result: string="";
-    // if(s1.length !== s2.length) console.log("s1 e s1 devem ser do msm tamanho");return"";
     for(var i=0; i < s1.length;i++){
         if(s1[i]===s2[i]) result+="0"
         else result+="1" 
