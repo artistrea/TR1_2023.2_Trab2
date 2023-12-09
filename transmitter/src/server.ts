@@ -42,14 +42,13 @@ app.post("/", (req, res) => {
 
   sendDataToInterface({ type: "text", content: text });
 
-  const bits = bitsFromText(text);
-  //const data = addEDC(bits, errorControl);
-  //const data = hamming(bits);
-  //const data = addBitCount(bits);
-  const data = addWordCount(bits);
-  //const data = bits;
+  let bits = bitsFromText(text);
+  bits = addEDC(bits, errorControl);
+  //bits = hamming(bits);
+  //bits = addBitCount(bits);
+  bits = addWordCount(bits);
   
-  sendDataToInterface({ type: "bits", content: data });
+  sendDataToInterface({ type: "bits", content: bits });
 
 
 

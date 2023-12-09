@@ -11,8 +11,8 @@ export function addEDC(data: string, errorControlType: ErrorControlType): string
     
     switch(errorControlType){
         case "CRC":
-            const polynomial = "1101";
-            // const polynomial = "10000010011000001000111011011011";
+            //const polynomial = "1101";
+            const polynomial = "10000010011000001000111011011011";
             const ord = polynomial.length
 
             for(var i=0;i<ord;i++) dataEDC += '0'  

@@ -38,7 +38,14 @@ app.post("/", (req, res) => {
 
   sendDataToInterface({ type: "encoded-bits", content: bits });
 
-  const decodedbits = decode(bits, encoding);
+
+  let data = bits.slice(7,71);//slice(78,142)...
+  //cuidado que nao esta verificando se o header esta certo
+  //slice(0,6).parseToNumber() == Math.ceil(slice(7,71) / 32)
+
+  
+
+  const decodedbits = decode(data, encoding);
 
   sendDataToInterface({ type: "bits", content: decodedbits });
 
