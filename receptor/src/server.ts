@@ -5,7 +5,7 @@ import { type EncodingType, decode, encodingSchema } from "./decode";
 import { z } from "zod";
 import { onReceivedText } from "./onReceivedText";
 import { textFromBits } from "./textFromBits";
-import { checkEDC } from "./checkErrorControl";
+import { checkEDC, checkHamming } from "./checkErrorControl";
 import { checkBitCount, checkWordCount } from "./checkBitCounting";
 
 // config
@@ -46,10 +46,11 @@ app.post("/", (req, res) => {
   let data = checkWordCount(decodedbits);
 
   data = checkEDC(data, "CRC");
+  // data = checkHamming(data);
 
-  sendDataToInterface({ type: "bits", content: data });
+  sendDataToInterface({ type: "bits", content: decodedbits });
+  // sendDataToInterface({ type: "bits", content: data });
 
-  
   const text = textFromBits(data);
 
   sendDataToInterface({ type: "text", content: text });

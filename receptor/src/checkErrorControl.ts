@@ -11,7 +11,6 @@ export function checkEDC(data: string, errorControlType: ErrorControlType): stri
     
     switch(errorControlType){
         case "CRC":
-            //const polynomial = "1101";
             const polynomial = "10000010011000001000111011011011";
             const ord = polynomial.length
 
@@ -25,6 +24,7 @@ export function checkEDC(data: string, errorControlType: ErrorControlType): stri
                 }
             }
             edc = divPiece.slice(0,ord-1)
+            data = data.slice(0,data.length-31)
         break;
         case "Bit de paridade par":
             let sum = 0
@@ -32,15 +32,14 @@ export function checkEDC(data: string, errorControlType: ErrorControlType): stri
                 if(bit==="1") sum+=1
             }
             edc = (sum%2===0)? "0":"1"
+            data = data.slice(0,data.length-1)
         break;
     }
     if(parseInt(edc)===0){
-        data = data.slice(0,data.length-31)
+        return data;
     }else{
         throw("Teve ruído"); // TODO: Pensar melhor o que fazer
     }
-
-    return data;
 }
 
 export function checkHamming(data: string): string {
