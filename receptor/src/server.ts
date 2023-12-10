@@ -5,6 +5,7 @@ import { type EncodingType, decode, encodingSchema } from "./decode";
 import { z } from "zod";
 import { onReceivedText } from "./onReceivedText";
 import { textFromBits } from "./textFromBits";
+import { checkEDC, checkHamming } from "./checkErrorControl";
 import {
   checkBitCount,
   checkCharCount,
@@ -49,7 +50,18 @@ app.post("/", (req, res) => {
   // let data = checkCharCount(decodedbits);
   let data = checkWordCount(decodedbits);
 
-  sendDataToInterface({ type: "bits", content: data });
+  // !!!SIMULAÇÂo DE RUIDO PARA HAMMING!!!
+  
+  // const noisePosition = 20;
+  // data = data.slice(0,noisePosition-1)+
+  //       ((data.slice(noisePosition-1,noisePosition)==='0')? "1":"0")+
+  //       data.slice(noisePosition)
+
+  //data = checkEDC(data, "CRC");
+  data = checkHamming(data);
+
+  sendDataToInterface({ type: "bits", content: decodedbits });
+  // sendDataToInterface({ type: "bits", content: data });
 
   const text = textFromBits(data);
 

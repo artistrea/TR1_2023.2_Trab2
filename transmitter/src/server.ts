@@ -43,8 +43,8 @@ app.post("/", (req, res) => {
   sendDataToInterface({ type: "text", content: text });
 
   let bits = bitsFromText(text);
-  //bits = addEDC(bits, errorControl);
-  //bits = hamming(bits);
+  //bits = addEDC(bits, "CRC");
+  bits = hamming(bits);
   //bits = addBitCount(bits);
   bits = addWordCount(bits);
   
