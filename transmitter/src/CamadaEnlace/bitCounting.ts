@@ -18,7 +18,7 @@ export function addCharCount(data: string): string {
   //   .map((s: string) => convertToBin(Math.ceil(s.length / 8)) + s)
   //   .join("");
 
-  let header = convertToBin(data.length);
+  let header = convertToBin(Math.ceil(data.length / 8));
   return header.concat(data)
 }
 
@@ -29,7 +29,7 @@ export function addWordCount(data: string): string {
   //   .map((s: string) => convertToBin(Math.ceil(s.length / 32)) + s)
   //   .join("");
 
-  let header = convertToBin(data.length);
+  let header = convertToBin(Math.ceil(data.length / 32));
   return header.concat(data)
 }
 
