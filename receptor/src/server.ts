@@ -6,6 +6,7 @@ import { z } from "zod";
 import { onReceivedText } from "./onReceivedText";
 import { textFromBits } from "./textFromBits";
 import { checkEDC } from "./checkErrorControl";
+import { checkBitCount, checkWordCount } from "./checkBitCounting";
 
 // config
 const port = 3002;
@@ -39,22 +40,16 @@ app.post("/", (req, res) => {
 
   sendDataToInterface({ type: "encoded-bits", content: bits });
 
-
-  
-  
-  
   const decodedbits = decode(bits, encoding);
-  
-  //removo o header
-  let data = decodedbits.slice(7,71);//slice(78,142)...
-  //cuidado que nao esta verificando se o header esta certo
-  //slice(0,6).parseToNumber() == Math.ceil(slice(7,71) / 32)
 
-  //checo se esta certo e removo o EDC
+  
+  let data = checkWordCount(decodedbits);
+
   data = checkEDC(data, "CRC");
 
-  sendDataToInterface({ type: "bits", content: decodedbits });
+  sendDataToInterface({ type: "bits", content: data });
 
+  
   const text = textFromBits(data);
 
   sendDataToInterface({ type: "text", content: text });
