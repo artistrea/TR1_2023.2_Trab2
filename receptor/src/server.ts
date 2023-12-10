@@ -49,8 +49,8 @@ app.post("/", (req, res) => {
   
   //let data = checkBitCount(decodedbits);
   // let data = checkCharCount(decodedbits);
-  let frames = getFramesByBitCount(decodedbits);
-
+  let frames = getFramesByCharCount(decodedbits);
+  console.log(frames)
   // !!!SIMULAÇÂo DE RUIDO PARA HAMMING!!!
   
   // const noisePosition = 20;

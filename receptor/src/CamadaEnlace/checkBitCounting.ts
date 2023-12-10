@@ -1,19 +1,24 @@
 import { headerSize } from "../config";
 
-function getFramesByCount(data: string, headerMultiplier: number): string[] {
+function getFramesByCount(
+  data: string,
+  headerMultiplier: 1 | 8 | 32
+): string[] {
   const frames: string[] = [];
 
   let i = 0;
   while (i < data.length) {
     const header =
       parseInt(data.slice(i, i + headerSize), 2) * headerMultiplier;
+    console.log("header", header);
     const dataWithoutHeader = data.slice(
       i + headerSize,
       i + headerSize + header
     );
+    console.log("dataWithoutHeader", dataWithoutHeader);
     frames.push(dataWithoutHeader);
 
-    if (dataWithoutHeader.length !== header) {
+    if (Math.ceil(dataWithoutHeader.length / headerMultiplier) === header) {
       // console.log(
       //   "dataWithoutHeader.length",
       //   dataWithoutHeader.length,
@@ -23,7 +28,9 @@ function getFramesByCount(data: string, headerMultiplier: number): string[] {
       throw "Deu erro com header, há interferência";
     }
 
-    i += header + headerSize;
+    i += dataWithoutHeader.length - 1 + headerSize - 1;
+    console.log("i", i);
+    console.log("############");
   }
 
   return frames;

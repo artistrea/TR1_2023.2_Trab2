@@ -50,7 +50,7 @@ app.post("/", (req, res) => {
   let frames: string[] =
     bits
       .match(frameMatchingRegex)
-      ?.map((frame) => addBitCount(hamming(frame))) || [];
+      ?.map((frame) => addCharCount(hamming(frame))) || [];
 
   //bits = addEDC(bits, "CRC");
   //bits = addBitCount(bits);
