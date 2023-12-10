@@ -5,7 +5,11 @@ import { type EncodingType, decode, encodingSchema } from "./decode";
 import { z } from "zod";
 import { onReceivedText } from "./onReceivedText";
 import { textFromBits } from "./textFromBits";
-import { checkBitCount, checkWordCount } from "./checkBitCounting";
+import {
+  checkBitCount,
+  checkCharCount,
+  checkWordCount,
+} from "./checkBitCounting";
 
 // config
 const port = 3002;
@@ -42,6 +46,7 @@ app.post("/", (req, res) => {
   const decodedbits = decode(bits, encoding);
 
   //let data = checkBitCount(decodedbits);
+  // let data = checkCharCount(decodedbits);
   let data = checkWordCount(decodedbits);
 
   sendDataToInterface({ type: "bits", content: data });
