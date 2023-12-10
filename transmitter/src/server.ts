@@ -7,6 +7,7 @@ import { sendDataToReceptor } from "./sendDataToReceptor";
 import { bitsFromText } from "./bitsFromText";
 import { ErrorControlType, addEDC, hamming } from "./errorControl";
 import { addBitCount, addWordCount } from "./bitCounting";
+import { byteInsertion } from "./byteInsertion";
 
 // config:
 const port = 3001;
@@ -44,9 +45,10 @@ app.post("/", (req, res) => {
 
   let bits = bitsFromText(text);
   //bits = addEDC(bits, "CRC");
-  bits = hamming(bits);
+  //bits = hamming(bits);
   //bits = addBitCount(bits);
-  bits = addWordCount(bits);
+  //bits = addWordCount(bits);
+  bits = byteInsertion(bits)
   
   sendDataToInterface({ type: "bits", content: bits });
 
