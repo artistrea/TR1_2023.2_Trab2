@@ -45,8 +45,15 @@ app.post("/", (req, res) => {
   
   let data = checkWordCount(decodedbits);
 
-  data = checkEDC(data, "CRC");
-  // data = checkHamming(data);
+  // !!!SIMULAÇÂo DE RUIDO PARA HAMMING!!!
+  
+  // const noisePosition = 20;
+  // data = data.slice(0,noisePosition-1)+
+  //       ((data.slice(noisePosition-1,noisePosition)==='0')? "1":"0")+
+  //       data.slice(noisePosition)
+
+  //data = checkEDC(data, "CRC");
+  data = checkHamming(data);
 
   sendDataToInterface({ type: "bits", content: decodedbits });
   // sendDataToInterface({ type: "bits", content: data });
