@@ -6,7 +6,7 @@ import { encodingSchema, encode, type EncodingType } from "./CamadaFisica/encode
 import { sendDataToReceptor } from "./InterfaceGUI/sendDataToReceptor";
 import { bitsFromText } from "./CamadaFisica/bitsFromText";
 import { ErrorControlType, addEDC, hamming } from "./CamadaEnlace/errorControl";
-import { addBitCount, addWordCount } from "./CamadaEnlace/bitCounting";
+import { addBitCount, addCharCount, addWordCount } from "./CamadaEnlace/bitCounting";
 
 // config:
 const port = 3001;
@@ -46,7 +46,7 @@ app.post("/", (req, res) => {
   //bits = addEDC(bits, "CRC");
   bits = hamming(bits);
   //bits = addBitCount(bits);
-  bits = addWordCount(bits);
+  bits = addCharCount(bits);
   
   sendDataToInterface({ type: "bits", content: bits });
 

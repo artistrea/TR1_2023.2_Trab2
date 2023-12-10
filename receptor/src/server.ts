@@ -48,7 +48,7 @@ app.post("/", (req, res) => {
 
   //let data = checkBitCount(decodedbits);
   // let data = checkCharCount(decodedbits);
-  let data = checkWordCount(decodedbits);
+  let data = checkCharCount(decodedbits);
 
   // !!!SIMULAÇÂo DE RUIDO PARA HAMMING!!!
   
