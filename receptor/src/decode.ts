@@ -7,7 +7,7 @@ export type EncodingType = z.infer<typeof encodingSchema>;
 export function decode(data: string, _encodingType: EncodingType): string {
   let outIn = "";
   outIn = data;
-  const regex = /V|v/gi;
+  const regex = /V|v|M/gi;
   switch(_encodingType){
     case "NRZ-Polar":
       var codif: {[key:string]: string} = {
@@ -30,7 +30,8 @@ export function decode(data: string, _encodingType: EncodingType): string {
     case "Bipolar":
       var codif: {[key:string]: string} = {
         V:"1",
-        v:"1"
+        v:"1",
+        M:"0"
       }
       outIn = outIn.replace(regex, b=> codif[b]); break
     }

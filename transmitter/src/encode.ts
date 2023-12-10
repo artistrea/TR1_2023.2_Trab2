@@ -29,7 +29,7 @@ export function encode(bits: string, encodingType: EncodingType): string {
           aux += one;
           if (one === "V") one = "v";
           else one = "V";
-        } else aux += "0";
+        } else aux += "M";
       }
       bits = aux;
       break;
