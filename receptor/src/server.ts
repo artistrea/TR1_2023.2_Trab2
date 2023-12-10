@@ -6,7 +6,11 @@ import { z } from "zod";
 import { onReceivedText } from "./onReceivedText";
 import { textFromBits } from "./textFromBits";
 import { checkEDC, checkHamming } from "./checkErrorControl";
-import { checkBitCount, checkWordCount } from "./checkBitCounting";
+import {
+  checkBitCount,
+  checkCharCount,
+  checkWordCount,
+} from "./checkBitCounting";
 
 // config
 const port = 3002;
@@ -20,7 +24,7 @@ app.use(cors());
 const bodySchema = z.object({
   bits: z
     .string()
-    .regex(/^(0|1|v|V)+$/, "String should contain only 1,0,v and V"),
+    .regex(/^(0|1|v|V|M)+$/, "String should contain only 1,0,v and V"),
 });
 
 app.post("/", (req, res) => {
@@ -42,7 +46,8 @@ app.post("/", (req, res) => {
 
   const decodedbits = decode(bits, encoding);
 
-  
+  //let data = checkBitCount(decodedbits);
+  // let data = checkCharCount(decodedbits);
   let data = checkWordCount(decodedbits);
 
   // !!!SIMULAÇÂo DE RUIDO PARA HAMMING!!!
