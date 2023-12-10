@@ -2,7 +2,6 @@ import type { EncodingType } from "../CamadaFisica/encode";
 
 type ReceptorMessage = {
   bits: string;
-  encoding: EncodingType;
 };
 
 // Send bits and encoding type to receptor

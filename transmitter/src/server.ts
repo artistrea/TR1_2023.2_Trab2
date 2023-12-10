@@ -57,7 +57,7 @@ app.post("/", (req, res) => {
 
   // ye
   sendDataToReceptor(
-    { bits: encodedData, encoding: encoding },
+    { bits: encodedData },
     receptorBaseUrl
   );
   // yay
