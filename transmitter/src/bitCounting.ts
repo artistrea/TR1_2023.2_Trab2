@@ -26,9 +26,5 @@ export function addWordCount(data: string): string {
 
 // converte número em string binário de 7 bits
 export function convertToBin(n: number) {
-  let variavelRetorno = (n >>> 0).toString(2);
-  while (variavelRetorno.length < 7) {
-    variavelRetorno = "0".concat(variavelRetorno);
-  }
-  return variavelRetorno;
+  return (n >>> 0).toString(2).padStart(7, "0");
 }
