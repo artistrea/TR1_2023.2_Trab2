@@ -1,40 +1,48 @@
-import { frameSize, headerSize } from "../config";
+import { headerSize } from "../config";
 
-const frameWHeaderSize = frameSize + headerSize;
+function getFramesByCount(data: string, headerMultiplier: number): string[] {
+  const frames: string[] = [];
 
-function checkCount(data: string, headerMultiplier: number) {
-  let bits = data;
-  let checkHeader = 0;
-  let bitsSaida = "";
+  let i = 0;
+  while (i < data.length) {
+    const header =
+      parseInt(data.slice(i, i + headerSize), 2) * headerMultiplier;
+    const dataWithoutHeader = data.slice(
+      i + headerSize,
+      i + headerSize + header
+    );
+    frames.push(dataWithoutHeader);
 
-  for (let i = 0; i >= 0; i += frameWHeaderSize) {
-    bits = data.slice(i + headerSize, i + frameWHeaderSize);
-    checkHeader = parseInt(data.slice(i, i + headerSize), 2);
-
-    if (checkHeader * headerMultiplier < bits.length) {
+    if (dataWithoutHeader.length !== header) {
+      // console.log(
+      //   "dataWithoutHeader.length",
+      //   dataWithoutHeader.length,
+      //   "header",
+      //   header
+      // );
       throw "Deu erro com header, há interferência";
     }
 
-    bitsSaida = bitsSaida.concat(bits);
-    if (i + frameWHeaderSize >= data.length) {
-      return bitsSaida;
-    }
+    i += header + headerSize;
   }
 
-  throw "Erro na função a qual faz a retiragem e checagem dos quadros";
+  return frames;
 }
 
 // throws if error in frame
-export function checkBitCount(data: string): string {
-  return checkCount(data, 1);
+// returns frames without their headers
+export function getFramesByBitCount(data: string): string[] {
+  return getFramesByCount(data, 1);
 }
 
 // throws if error in frame
-export function checkWordCount(data: string): string {
-  return checkCount(data, 32);
+// returns frames without their headers
+export function getFramesByWordCount(data: string): string[] {
+  return getFramesByCount(data, 32);
 }
 
 // throws if error in frame
-export function checkCharCount(data: string): string {
-  return checkCount(data, 8);
+// returns frames without their headers
+export function getFramesByCharCount(data: string): string[] {
+  return getFramesByCount(data, 8);
 }

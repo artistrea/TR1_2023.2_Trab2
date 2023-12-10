@@ -7,9 +7,8 @@ import { onReceivedText } from "./InterfaceGUI/onReceivedText";
 import { textFromBits } from "./CamadaFisica/textFromBits";
 import { checkEDC, checkHamming } from "./CamadaEnlace/checkErrorControl";
 import {
-  checkBitCount,
-  checkCharCount,
-  checkWordCount,
+  getFramesByBitCount,
+  getFramesByCharCount,
 } from "./CamadaEnlace/checkBitCounting";
 
 // config
@@ -45,10 +44,12 @@ app.post("/", (req, res) => {
   sendDataToInterface({ type: "encoded-bits", content: bits });
 
   const decodedbits = decode(bits, encoding);
-
+  
+  sendDataToInterface({ type: "bits", content: decodedbits });
+  
   //let data = checkBitCount(decodedbits);
   // let data = checkCharCount(decodedbits);
-  let data = checkCharCount(decodedbits);
+  let frames = getFramesByBitCount(decodedbits);
 
   // !!!SIMULAÇÂo DE RUIDO PARA HAMMING!!!
   
@@ -58,12 +59,9 @@ app.post("/", (req, res) => {
   //       data.slice(noisePosition)
 
   //data = checkEDC(data, "CRC");
-  data = checkHamming(data);
+  frames = frames.map((frame) =>  checkHamming(frame));
 
-  sendDataToInterface({ type: "bits", content: decodedbits });
-  // sendDataToInterface({ type: "bits", content: data });
-
-  const text = textFromBits(data);
+  const text = textFromBits(frames.join(""));
 
   sendDataToInterface({ type: "text", content: text });
 

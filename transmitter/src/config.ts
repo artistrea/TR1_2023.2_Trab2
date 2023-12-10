@@ -1,2 +1,2 @@
-export const frameSize = 64;
+export const frameSize = 32;
 export const headerSize = 7;
