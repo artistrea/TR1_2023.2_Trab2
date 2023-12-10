@@ -5,6 +5,7 @@ import { type EncodingType, decode, encodingSchema } from "./decode";
 import { z } from "zod";
 import { onReceivedText } from "./onReceivedText";
 import { textFromBits } from "./textFromBits";
+import { checkBitCount, checkWordCount } from "./checkBitCounting";
 
 // config
 const port = 3002;
@@ -38,18 +39,14 @@ app.post("/", (req, res) => {
 
   sendDataToInterface({ type: "encoded-bits", content: bits });
 
+  const decodedbits = decode(bits, encoding);
 
-  let data = bits.slice(7,71);//slice(78,142)...
-  //cuidado que nao esta verificando se o header esta certo
-  //slice(0,6).parseToNumber() == Math.ceil(slice(7,71) / 32)
+  //let data = checkBitCount(decodedbits);
+  let data = checkWordCount(decodedbits);
 
-  
+  sendDataToInterface({ type: "bits", content: data });
 
-  const decodedbits = decode(data, encoding);
-
-  sendDataToInterface({ type: "bits", content: decodedbits });
-
-  const text = textFromBits(decodedbits);
+  const text = textFromBits(data);
 
   sendDataToInterface({ type: "text", content: text });
 
