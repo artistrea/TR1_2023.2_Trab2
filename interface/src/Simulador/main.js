@@ -1,4 +1,4 @@
-import { subscribe } from "./subscribe";
+import { subscribe } from "../subscribe";
 
 const transmitterBaseUrl = "http://localhost:3001";
 const receptorBaseUrl = "http://localhost:3002";

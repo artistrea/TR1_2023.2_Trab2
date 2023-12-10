@@ -1,16 +1,16 @@
 import express from "express";
 import cors from "cors";
-import { sendDataToInterface, subscribeInterface } from "./interfaceComms";
-import { type EncodingType, decode, encodingSchema } from "./Física/decode";
+import { sendDataToInterface, subscribeInterface } from "./InterfaceGUI/interfaceComms";
+import { type EncodingType, decode, encodingSchema } from "./CamadaFisica/decode";
 import { z } from "zod";
-import { onReceivedText } from "./onReceivedText";
-import { textFromBits } from "./Física/textFromBits";
-import { checkEDC, checkHamming } from "./Enlace/checkErrorControl";
+import { onReceivedText } from "./InterfaceGUI/onReceivedText";
+import { textFromBits } from "./CamadaFisica/textFromBits";
+import { checkEDC, checkHamming } from "./CamadaEnlace/checkErrorControl";
 import {
   checkBitCount,
   checkCharCount,
   checkWordCount,
-} from "./Enlace/checkBitCounting";
+} from "./CamadaEnlace/checkBitCounting";
 
 // config
 const port = 3002;
