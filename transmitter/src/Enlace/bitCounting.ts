@@ -1,4 +1,4 @@
-import { frameSize } from "./config";
+import { frameSize } from "../config";
 
 const frameMatchingRegex = new RegExp(`.{1,${frameSize}}`, "g");
 

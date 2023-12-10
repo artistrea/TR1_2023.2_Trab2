@@ -1,4 +1,4 @@
-import type { EncodingType } from "./encode";
+import type { EncodingType } from "./Física/encode";
 
 type ReceptorMessage = {
   bits: string;

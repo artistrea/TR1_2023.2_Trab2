@@ -1,5 +1,5 @@
 import type { Response, Request, Query } from "express-serve-static-core";
-import type { EncodingType } from "./decode";
+import type { EncodingType } from "./Física/decode";
 
 type Res = Response<any, Record<string, any>, number>;
 type Req = Request<{}, any, any, Query, Record<string, any>>;

@@ -1,4 +1,4 @@
-import { frameSize, headerSize } from "./config";
+import { frameSize, headerSize } from "../config";
 
 const frameWHeaderSize = frameSize + headerSize;
 

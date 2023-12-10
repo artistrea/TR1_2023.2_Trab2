@@ -1,16 +1,16 @@
 import express from "express";
 import cors from "cors";
 import { sendDataToInterface, subscribeInterface } from "./interfaceComms";
-import { type EncodingType, decode, encodingSchema } from "./decode";
+import { type EncodingType, decode, encodingSchema } from "./Física/decode";
 import { z } from "zod";
 import { onReceivedText } from "./onReceivedText";
-import { textFromBits } from "./textFromBits";
-import { checkEDC, checkHamming } from "./checkErrorControl";
+import { textFromBits } from "./Física/textFromBits";
+import { checkEDC, checkHamming } from "./Enlace/checkErrorControl";
 import {
   checkBitCount,
   checkCharCount,
   checkWordCount,
-} from "./checkBitCounting";
+} from "./Enlace/checkBitCounting";
 
 // config
 const port = 3002;

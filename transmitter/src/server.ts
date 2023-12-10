@@ -2,11 +2,11 @@ import express from "express";
 import cors from "cors";
 import { z } from "zod";
 import { sendDataToInterface, subscribeInterface } from "./interfaceComms";
-import { encodingSchema, encode, type EncodingType } from "./encode";
+import { encodingSchema, encode, type EncodingType } from "./Física/encode";
 import { sendDataToReceptor } from "./sendDataToReceptor";
-import { bitsFromText } from "./bitsFromText";
-import { ErrorControlType, addEDC, hamming } from "./errorControl";
-import { addBitCount, addWordCount } from "./bitCounting";
+import { bitsFromText } from "./Física/bitsFromText";
+import { ErrorControlType, addEDC, hamming } from "./Enlace/errorControl";
+import { addBitCount, addWordCount } from "./Enlace/bitCounting";
 
 // config:
 const port = 3001;
