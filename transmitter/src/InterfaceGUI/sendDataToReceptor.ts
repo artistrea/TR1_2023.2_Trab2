@@ -1,4 +1,4 @@
-import type { EncodingType } from "./encode";
+import type { EncodingType } from "../CamadaFisica/encode";
 
 type ReceptorMessage = {
   bits: string;

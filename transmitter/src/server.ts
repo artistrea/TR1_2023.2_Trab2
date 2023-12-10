@@ -1,12 +1,12 @@
 import express from "express";
 import cors from "cors";
 import { z } from "zod";
-import { sendDataToInterface, subscribeInterface } from "./interfaceComms";
-import { encodingSchema, encode, type EncodingType } from "./encode";
-import { sendDataToReceptor } from "./sendDataToReceptor";
-import { bitsFromText } from "./bitsFromText";
-import { ErrorControlType, addEDC, hamming } from "./errorControl";
-import { addBitCount, addWordCount } from "./bitCounting";
+import { sendDataToInterface, subscribeInterface } from "./InterfaceGUI/interfaceComms";
+import { encodingSchema, encode, type EncodingType } from "./CamadaFisica/encode";
+import { sendDataToReceptor } from "./InterfaceGUI/sendDataToReceptor";
+import { bitsFromText } from "./CamadaFisica/bitsFromText";
+import { ErrorControlType, addEDC, hamming } from "./CamadaEnlace/errorControl";
+import { addBitCount, addWordCount } from "./CamadaEnlace/bitCounting";
 
 // config:
 const port = 3001;

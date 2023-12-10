@@ -1,4 +1,4 @@
-import { setChartBits } from "./chart";
+import { setChartBits } from "./Simulador/chart";
 
 
 
