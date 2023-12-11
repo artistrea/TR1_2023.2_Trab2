@@ -51,16 +51,17 @@ app.post("/", (req, res) => {
   // let data = checkCharCount(decodedbits);
   let frames = getFramesByCharCount(decodedbits);
   console.log(frames)
-  // !!!SIMULAÇÂo DE RUIDO PARA HAMMING!!!
-  
-  // const noisePosition = 20;
-  // data = data.slice(0,noisePosition-1)+
-  //       ((data.slice(noisePosition-1,noisePosition)==='0')? "1":"0")+
-  //       data.slice(noisePosition)
 
-  // frames = frames.map((frame) =>  checkHamming(frame));
+  // !!!SIMULAÇÂo DE RUIDO PARA HAMMING!!!
+  const noisePosition = 20;
+  frames[0] = frames[0].slice(0,noisePosition-1)+
+        ((frames[0].slice(noisePosition-1,noisePosition)==='0')? "1":"0")+
+        frames[0].slice(noisePosition)
+        
+  frames = frames.map((frame) =>  checkHamming(frame));
+
   // frames = frames.map((frame) =>  checkEDC(frame, "CRC"));
-  frames = frames.map((frame) =>  checkEDC(frame, "Bit de paridade par"));
+  // frames = frames.map((frame) =>  checkEDC(frame, "Bit de paridade par"));
 
   const text = textFromBits(frames.join(""));
 

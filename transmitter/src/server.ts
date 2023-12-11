@@ -45,23 +45,22 @@ app.post("/", (req, res) => {
 
   let bits = bitsFromText(text);
 
-  const frameMatchingRegex = new RegExp(`.{1,${frameSize.paridade}}`, "g");
+  const frameMatchingRegex = new RegExp(`.{1,${frameSize.hamming}}`, "g");
 
-  // let frames: string[] =
-  //   bits
-  //     .match(frameMatchingRegex)
-  //     ?.map((frame) => addCharCount(hamming(frame.padEnd(frameSize.hamming, "0")))) || [];
+  let frames: string[] =
+    bits
+      .match(frameMatchingRegex)
+      ?.map((frame) => addCharCount(hamming(frame.padEnd(frameSize.hamming, "0")))) || [];
 
   // let frames: string[] =
   //   bits
   //     .match(frameMatchingRegex)
   //     ?.map((frame) => addCharCount(addEDC(frame.padEnd(frameSize.crc, "0"), "CRC")+'0')) || [];
 
-
-  let frames: string[] =
-    bits
-      .match(frameMatchingRegex)
-      ?.map((frame) => addCharCount(addEDC(frame.padEnd(frameSize.paridade, "0"), "Bit de paridade par"))) || [];
+  // let frames: string[] =
+  //   bits
+  //     .match(frameMatchingRegex)
+  //     ?.map((frame) => addCharCount(addEDC(frame.padEnd(frameSize.paridade, "0"), "Bit de paridade par"))) || [];
 
   //bits = addEDC(bits, "CRC");
   //bits = addBitCount(bits);
