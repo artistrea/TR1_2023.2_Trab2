@@ -11,7 +11,7 @@ import {
   getFramesByCharCount,
 } from "./CamadaEnlace/checkBitCounting";
 import { EDC, frameLimiter } from "./config";
-import { getFramesByInsertionFlag } from "./CamadaEnlace/byteRemove";
+import { getFramesByInsertionFlag } from "./CamadaEnlace/getFramesByInsertionFlag";
 
 // config
 const port = 3002;
@@ -54,6 +54,7 @@ app.post("/", (req, res) => {
     frames = getFramesByCharCount(decodedbits);
   } else {
     frames = getFramesByInsertionFlag(decodedbits);
+    console.log("frames", frames)
   }
 
   if (EDC !== "hamming") {
