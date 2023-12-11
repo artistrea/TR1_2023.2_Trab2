@@ -24,7 +24,7 @@ export function checkEDC(data: string, errorControlType: ErrorControlType): stri
                 }
             }
             edc = divPiece.slice(0,ord-1)
-            data = data.slice(0,data.length-31)
+            data = data.slice(0,32)
         break;
         case "Bit de paridade par":
             let sum = 0
@@ -75,6 +75,7 @@ export function checkHamming(data: string): string {
     
         return data
     }else{
+        
         throw("Teve ruído na posição "+bitErrorPosition)
     }
 }

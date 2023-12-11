@@ -7,6 +7,7 @@ import { sendDataToReceptor } from "./InterfaceGUI/sendDataToReceptor";
 import { bitsFromText } from "./CamadaFisica/bitsFromText";
 import { ErrorControlType, addEDC, hamming } from "./CamadaEnlace/errorControl";
 import { addBitCount, addCharCount, addWordCount } from "./CamadaEnlace/bitCounting";
+import { frameSize } from "./config";
 
 // config:
 const port = 3001;
@@ -43,10 +44,33 @@ app.post("/", (req, res) => {
   sendDataToInterface({ type: "text", content: text });
 
   let bits = bitsFromText(text);
+
+  const frameMatchingRegex = new RegExp(`.{1,${frameSize.paridade}}`, "g");
+
+  // let frames: string[] =
+  //   bits
+  //     .match(frameMatchingRegex)
+  //     ?.map((frame) => addCharCount(hamming(frame.padEnd(frameSize.hamming, "0")))) || [];
+
+  // let frames: string[] =
+  //   bits
+  //     .match(frameMatchingRegex)
+  //     ?.map((frame) => addCharCount(addEDC(frame.padEnd(frameSize.crc, "0"), "CRC")+'0')) || [];
+
+
+  let frames: string[] =
+    bits
+      .match(frameMatchingRegex)
+      ?.map((frame) => addCharCount(addEDC(frame.padEnd(frameSize.paridade, "0"), "Bit de paridade par"))) || [];
+
   //bits = addEDC(bits, "CRC");
-  bits = hamming(bits);
   //bits = addBitCount(bits);
-  bits = addCharCount(bits);
+  // bits = hamming(bits);
+  // bits = addCharCount(bits);
+
+  bits = frames.join("");
+
+  console.log("frames", frames);
   
   sendDataToInterface({ type: "bits", content: bits });
 
