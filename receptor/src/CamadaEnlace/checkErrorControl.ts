@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const ECSchema = z.enum(["Bit de paridade par", "CRC"]);
+export const ECSchema = z.enum(["paridade", "crc"]);
 
 export type ErrorControlType = z.infer<typeof ECSchema>;
 
@@ -10,7 +10,7 @@ export function checkEDC(data: string, errorControlType: ErrorControlType): stri
     let edc : string="";
     
     switch(errorControlType){
-        case "CRC":
+        case "crc":
             const polynomial = "10000010011000001000111011011011";
             const ord = polynomial.length
 
@@ -26,7 +26,7 @@ export function checkEDC(data: string, errorControlType: ErrorControlType): stri
             edc = divPiece.slice(0,ord-1)
             data = data.slice(0,32)
         break;
-        case "Bit de paridade par":
+        case "paridade":
             let sum = 0
             for(const bit of data){
                 if(bit==="1") sum+=1
