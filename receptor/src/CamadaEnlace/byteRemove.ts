@@ -1,5 +1,5 @@
-const flag = "11110000";
-const esc = "11111111";
+import { flag, esc } from "../config";
+
 const jaTinhaESC = esc.concat(esc);
 const escFlag = esc.concat(flag);
 
