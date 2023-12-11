@@ -58,9 +58,9 @@ app.post("/", (req, res) => {
   //       ((data.slice(noisePosition-1,noisePosition)==='0')? "1":"0")+
   //       data.slice(noisePosition)
 
-  //data = checkEDC(data, "CRC");
   // frames = frames.map((frame) =>  checkHamming(frame));
-  frames = frames.map((frame) =>  checkEDC(frame, "CRC"));
+  // frames = frames.map((frame) =>  checkEDC(frame, "CRC"));
+  frames = frames.map((frame) =>  checkEDC(frame, "Bit de paridade par"));
 
   const text = textFromBits(frames.join(""));
 
