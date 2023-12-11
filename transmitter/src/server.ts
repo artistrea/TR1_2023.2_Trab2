@@ -7,7 +7,8 @@ import { sendDataToReceptor } from "./InterfaceGUI/sendDataToReceptor";
 import { bitsFromText } from "./CamadaFisica/bitsFromText";
 import { ErrorControlType, addEDC, hamming } from "./CamadaEnlace/errorControl";
 import { addBitCount, addCharCount, addWordCount } from "./CamadaEnlace/bitCounting";
-import { EDC, frameSize } from "./config";
+import { EDC, frameLimiter, frameSize } from "./config";
+import { byteInsertion } from "./CamadaEnlace/byteInsertion";
 
 // config:
 const port = 3001;
@@ -53,32 +54,29 @@ app.post("/", (req, res) => {
     let actualEDC = EDC; // MALDITO TYPESCRIPT ME OBRIGANDO A FAZER GAMBIARRA
 
     frames = bits
-         .match(frameMatchingRegex)
-         ?.map((frame) => addCharCount(addEDC(frame.padEnd(frameSize.paridade, "0"), actualEDC))) || [];
-  } else {
-    frames =
-    bits
       .match(frameMatchingRegex)
-      ?.map((frame) => addCharCount(hamming(frame.padEnd(frameSize.hamming, "0")))) || [];
+      ?.map((frame) => addEDC(frame.padEnd(frameSize[EDC], "0"), actualEDC)) || [];    
+  } else {
+    frames = bits
+      .match(frameMatchingRegex)
+      ?.map((frame) => hamming(frame.padEnd(frameSize.hamming, "0"))) || [];
+
   }
 
-  // let frames: string[] =
-  //   bits
-  //     .match(frameMatchingRegex)
-  //     ?.map((frame) => addCharCount(hamming(frame.padEnd(frameSize.hamming, "0")))) || [];
+  if (frameLimiter === "count") {
+    frames = frames.map(addCharCount);
+  } else {
+    frames = frames.map(byteInsertion);
+  }
+  
+  if (EDC === "hamming") {
+    // !!!SIMULAÇÂO DE RUIDO PARA HAMMING!!!
+    const noisePosition = 20;
 
-  // let frames: string[] =
-  //   bits
-  //     .match(frameMatchingRegex)
-  //     ?.map((frame) => addCharCount(addEDC(frame.padEnd(frameSize.crc, "0"), "CRC")+'0')) || [];
-
-
-
-
-  //bits = addEDC(bits, "CRC");
-  //bits = addBitCount(bits);
-  // bits = hamming(bits);
-  // bits = addCharCount(bits);
+    frames[0] = frames[0].slice(0, noisePosition - 1) +
+      ((frames[0].slice(noisePosition-1, noisePosition)==='0')? "1":"0")+
+      frames[0].slice(noisePosition)
+  }
 
   bits = frames.join("");
 
