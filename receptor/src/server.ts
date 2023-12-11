@@ -10,6 +10,8 @@ import {
   getFramesByBitCount,
   getFramesByCharCount,
 } from "./CamadaEnlace/checkBitCounting";
+import { EDC, frameLimiter } from "./config";
+import { getFramesByInsertionFlag } from "./CamadaEnlace/getFramesByInsertionFlag";
 
 // config
 const port = 3002;
@@ -47,21 +49,21 @@ app.post("/", (req, res) => {
   
   sendDataToInterface({ type: "bits", content: decodedbits });
   
-  //let data = checkBitCount(decodedbits);
-  // let data = checkCharCount(decodedbits);
-  let frames = getFramesByCharCount(decodedbits);
-  console.log(frames)
+  let frames: string[] 
+  if (frameLimiter === "count") {
+    frames = getFramesByCharCount(decodedbits);
+  } else {
+    frames = getFramesByInsertionFlag(decodedbits);
+    console.log("frames", frames)
+  }
 
-  // !!!SIMULAÇÂo DE RUIDO PARA HAMMING!!!
-  const noisePosition = 20;
-  frames[0] = frames[0].slice(0,noisePosition-1)+
-        ((frames[0].slice(noisePosition-1,noisePosition)==='0')? "1":"0")+
-        frames[0].slice(noisePosition)
-        
-  frames = frames.map((frame) =>  checkHamming(frame));
+  if (EDC !== "hamming") {
+    let actualEDC = EDC; // MALDITO TYPESCRIPT ME OBRIGANDO A FAZER GAMBIARRA
 
-  // frames = frames.map((frame) =>  checkEDC(frame, "CRC"));
-  // frames = frames.map((frame) =>  checkEDC(frame, "Bit de paridade par"));
+    frames = frames.map((frame) =>  checkEDC(frame, actualEDC));
+  } else {
+    frames = frames.map((frame) =>  checkHamming(frame));
+  }
 
   const text = textFromBits(frames.join(""));
 
