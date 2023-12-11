@@ -65,19 +65,22 @@ export function checkHamming(data: string): string {
         edac.push((sum%2===0)? "0":"1");
     }
     const bitErrorPosition : number = parseInt(edac.reverse().join("") , 2)
-    if(bitErrorPosition===0){
-        let cut:number;
-        for(let i=0;i<verfBitsLen;i++){
-            cut = 2**i-1
-            data = data.slice(0,cut) + "P" + data.slice(cut+1)
-        }
-        data = data.replace(/P/gi,"")
-    
-        return data
-    }else{
-        
-        throw("Teve ruído na posição "+bitErrorPosition)
+
+    if(bitErrorPosition !== 0){
+        data = data.slice(0,bitErrorPosition-1)+
+            ((data.slice(bitErrorPosition-1,bitErrorPosition)==='0')? "1":"0")+
+            data.slice(bitErrorPosition)
+        //throw("Teve ruído na posição "+bitErrorPosition)  
     }
+
+    let cut:number;
+    for(let i=0;i<verfBitsLen;i++){
+        cut = 2**i-1
+        data = data.slice(0,cut) + "P" + data.slice(cut+1)
+    }
+    data = data.replace(/P/gi,"")
+
+    return data
 }
 
 
