@@ -7,13 +7,12 @@ import { sendDataToReceptor } from "./InterfaceGUI/sendDataToReceptor";
 import { bitsFromText } from "./CamadaFisica/bitsFromText";
 import { ErrorControlType, addEDC, hamming } from "./CamadaEnlace/errorControl";
 import { addBitCount, addCharCount, addWordCount } from "./CamadaEnlace/bitCounting";
-import { frameSize } from "./config";
+import { EDC, frameSize } from "./config";
 
 // config:
 const port = 3001;
 const receptorBaseUrl = "http://localhost:3002";
 let encoding: EncodingType = "NRZ-Polar";
-let errorControl: ErrorControlType = "CRC";
 
 // setup:
 const app = express();
@@ -39,13 +38,29 @@ app.post("/", (req, res) => {
   const {
     data: { text },
   } = result;
+
   sendDataToInterface({ type: "encoding", content: encoding });
 
   sendDataToInterface({ type: "text", content: text });
 
   let bits = bitsFromText(text);
 
-  const frameMatchingRegex = new RegExp(`.{1,${frameSize.paridade}}`, "g");
+  
+  const frameMatchingRegex = new RegExp(`.{1,${frameSize[EDC]}}`, "g");
+  let frames: string[];
+
+  if (EDC !== "hamming") {
+    let actualEDC = EDC; // MALDITO TYPESCRIPT ME OBRIGANDO A FAZER GAMBIARRA
+
+    frames = bits
+         .match(frameMatchingRegex)
+         ?.map((frame) => addCharCount(addEDC(frame.padEnd(frameSize.paridade, "0"), actualEDC))) || [];
+  } else {
+    frames =
+    bits
+      .match(frameMatchingRegex)
+      ?.map((frame) => addCharCount(hamming(frame.padEnd(frameSize.hamming, "0")))) || [];
+  }
 
   // let frames: string[] =
   //   bits
@@ -58,10 +73,7 @@ app.post("/", (req, res) => {
   //     ?.map((frame) => addCharCount(addEDC(frame.padEnd(frameSize.crc, "0"), "CRC")+'0')) || [];
 
 
-  let frames: string[] =
-    bits
-      .match(frameMatchingRegex)
-      ?.map((frame) => addCharCount(addEDC(frame.padEnd(frameSize.paridade, "0"), "Bit de paridade par"))) || [];
+
 
   //bits = addEDC(bits, "CRC");
   //bits = addBitCount(bits);

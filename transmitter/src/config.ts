@@ -4,4 +4,6 @@ export const frameSize = {
   paridade: 63,
 };
 
+export const EDC: keyof typeof frameSize = "crc";
+
 export const headerSize = 7;
