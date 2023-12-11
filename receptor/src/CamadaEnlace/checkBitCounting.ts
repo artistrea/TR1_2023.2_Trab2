@@ -28,7 +28,7 @@ function getFramesByCount(
       throw "Deu erro com header, há interferência";
     }
 
-    i += dataWithoutHeader.length - 1 + headerSize - 1;
+    i += dataWithoutHeader.length + headerSize;
     console.log("i", i);
     console.log("############");
   }

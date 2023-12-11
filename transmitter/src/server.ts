@@ -47,10 +47,14 @@ app.post("/", (req, res) => {
 
   const frameMatchingRegex = new RegExp(`.{1,${frameSize}}`, "g");
 
+  // let frames: string[] =
+  //   bits
+  //     .match(frameMatchingRegex)
+  //     ?.map((frame) => addCharCount(hamming(frame.padEnd(frameSize, "0")))) || [];
   let frames: string[] =
     bits
       .match(frameMatchingRegex)
-      ?.map((frame) => addCharCount(hamming(frame))) || [];
+      ?.map((frame) => addCharCount(addEDC(frame.padEnd(frameSize, "0"), "CRC"))) || [];
 
   //bits = addEDC(bits, "CRC");
   //bits = addBitCount(bits);

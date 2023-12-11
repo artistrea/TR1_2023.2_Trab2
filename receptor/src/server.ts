@@ -59,7 +59,8 @@ app.post("/", (req, res) => {
   //       data.slice(noisePosition)
 
   //data = checkEDC(data, "CRC");
-  frames = frames.map((frame) =>  checkHamming(frame));
+  // frames = frames.map((frame) =>  checkHamming(frame));
+  frames = frames.map((frame) =>  checkEDC(frame, "CRC"));
 
   const text = textFromBits(frames.join(""));
 
