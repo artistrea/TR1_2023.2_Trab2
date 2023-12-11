@@ -1,7 +1,14 @@
 import express from "express";
 import cors from "cors";
-import { sendDataToInterface, subscribeInterface } from "./InterfaceGUI/interfaceComms";
-import { type EncodingType, decode, encodingSchema } from "./CamadaFisica/decode";
+import {
+  sendDataToInterface,
+  subscribeInterface,
+} from "./InterfaceGUI/interfaceComms";
+import {
+  type EncodingType,
+  decode,
+  encodingSchema,
+} from "./CamadaFisica/decode";
 import { z } from "zod";
 import { onReceivedText } from "./InterfaceGUI/onReceivedText";
 import { textFromBits } from "./CamadaFisica/textFromBits";
@@ -46,23 +53,23 @@ app.post("/", (req, res) => {
   sendDataToInterface({ type: "encoded-bits", content: bits });
 
   const decodedbits = decode(bits, encoding);
-  
+
   sendDataToInterface({ type: "bits", content: decodedbits });
-  
-  let frames: string[] 
+
+  let frames: string[];
   if (frameLimiter === "count") {
     frames = getFramesByCharCount(decodedbits);
   } else {
     frames = getFramesByInsertionFlag(decodedbits);
-    console.log("frames", frames)
+    console.log("frames", frames);
   }
 
   if (EDC !== "hamming") {
     let actualEDC = EDC; // MALDITO TYPESCRIPT ME OBRIGANDO A FAZER GAMBIARRA
 
-    frames = frames.map((frame) =>  checkEDC(frame, actualEDC));
+    frames = frames.map((frame) => checkEDC(frame, actualEDC));
   } else {
-    frames = frames.map((frame) =>  checkHamming(frame));
+    frames = frames.map((frame) => checkHamming(frame));
   }
 
   const text = textFromBits(frames.join(""));

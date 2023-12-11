@@ -9,43 +9,86 @@
   </head>
   <body>
     <main class="bg-slate-900 min-h-screen w-full text-blue-50">
-      <h1 class="text-3xl p-6 font-bold">Interface para o Trabalho 2</h1>
-      <form
-        id="send-encoding-form"
-        class="flex flex-col gap-1 w-max mx-5 mt-5 px-5"
-      >
-        <label for="encoding-to-send">Escolha o tipo de encoding: </label>
-        <label
-          for="encoding-to-send"
-          class="relative after:absolute after:right-4 after:top-[57%] after:border-l-transparent after:border-r-transparent after:border-l-4 after:border-r-4 after:border-t-4 before:absolute before:right-4 before:top-[42%] before:border-l-transparent before:border-r-transparent before:border-l-4 before:border-r-4 before:border-b-4 after:pointer-events-none before:pointer-events-none"
-        >
-          <select
-            name="encoding-to-send"
-            class="w-full h-full bg-slate-800 appearance-none cursor-pointer p-2"
-            id="encoding-to-send"
+      <div class="flex">
+        <div>
+          <h1 class="text-3xl p-6 font-bold">Interface para o Trabalho 2</h1>
+          <form
+            id="send-encoding-form"
+            class="flex flex-col gap-1 w-max mx-5 mt-5 px-5"
           >
-            <option value="NRZ-Polar">NRZ-Polar</option>
-            <option value="Manchester">Manchester</option>
-            <option value="Bipolar">Bipolar</option>
-          </select>
-        </label>
-      </form>
-      <form
-        id="send-text-form"
-        class="flex flex-col gap-1 w-max m-5 p-5 relative before:border before:absolute before:right-0 before:bottom-0 before:top-1/2 after:[content:'>'] after:absolute after:-right-[10px] after:-bottom-3 after:rotate-90 after:text-3xl"
-      >
-        <label for="text-to-send">Faça o transmissor enviar um texto: </label>
-        <input class="px-3 py-1 bg-slate-800" type="text" id="text-to-send" />
-        <button class="bg-slate-800/50 px-3 py-1">Send</button>
-      </form>
+            <label for="encoding-to-send">Escolha o tipo de encoding: </label>
+            <label
+              for="encoding-to-send"
+              class="relative after:absolute after:right-4 after:top-[57%] after:border-l-transparent after:border-r-transparent after:border-l-4 after:border-r-4 after:border-t-4 before:absolute before:right-4 before:top-[42%] before:border-l-transparent before:border-r-transparent before:border-l-4 before:border-r-4 before:border-b-4 after:pointer-events-none before:pointer-events-none"
+            >
+              <select
+                name="encoding-to-send"
+                class="w-full h-full bg-slate-800 appearance-none cursor-pointer p-2"
+                id="encoding-to-send"
+              >
+              <option value="NRZ-Polar">NRZ-Polar</option>
+              <option value="Manchester">Manchester</option>
+              <option value="Bipolar">Bipolar</option>
+            </select>
+            </label>
+          </form>
+          <form
+            id="send-text-form"
+            class="flex flex-col gap-1 w-max m-5 p-5 relative before:border before:absolute before:right-0 before:bottom-0 before:top-1/2 after:[content:'>'] after:absolute after:-right-[10px] after:-bottom-3 after:rotate-90 after:text-3xl"
+          >
+            <label for="text-to-send">Faça o transmissor enviar um texto: </label>
+            <input class="px-3 py-1 bg-slate-800" type="text" id="text-to-send" />
+            <button class="bg-slate-800/50 px-3 py-1">Send</button>
+          </form>
+        </div>
+        <aside class="relative px-12 py-6 ml-auto hidden sm:block">
+          <svg
+              class="absolute left-3 top-9 text-blue-200"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-info"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 16v-4" />
+              <path d="M12 8h.01" />
+          </svg>
+          <p class="text-sm inline">
+            Para alterar entre as opções de controle de erro, que são
+            <span class="inline italic">hamming</span>,
+            <span class="inline italic">paridade</span> e
+            <span class="inline italic">crc</span>;
+          </p>
+          <p class="inline ml-1">
+            altere o arquivo <strong> config.ts </strong> nas pastas
+            <strong>/receptor/src</strong>
+            e <strong>/receptor/src</strong>
+          </p>
+          <br />
+          <p class="text-sm inline">
+            Para alterar entre as opções de enquadramento, que são
+            <span class="inline italic">insertion</span>
+            e
+            <span class="inline italic">count</span>
+            de bytes/caracteres,
+          </p>
+          <p class="inline ml-1">altere os mesmos arquivos</p>
+        </aside>
+      </div>
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2 w-full px-6">
         <div class="p-4 bg-slate-800/40 rounded-md">
           <span class="flex justify-between">
             <h2 class="text-blue-50/90 text-3xl">Transmissor</h2>
             <div
-              id="transmitter-connected-status"
-              class="group flex items-end flex-col justify-center"
-              data-connected=""
+            id="transmitter-connected-status"
+            class="group flex items-end flex-col justify-center"
+            data-connected=""
             >
               <div class="flex items-center gap-2">
                 <div
@@ -53,7 +96,7 @@
                 ></div>
                 <p
                   class="my-auto group-data-[connected='false']:block opacity-80 hidden"
-                >
+                  >
                   Erro!
                 </p>
                 <p
@@ -62,7 +105,7 @@
                   Conectado
                 </p>
                 <p
-                  class="my-auto group-data-[connected='']:block opacity-80 hidden"
+                class="my-auto group-data-[connected='']:block opacity-80 hidden"
                 >
                   Conectando...
                 </p>
@@ -91,15 +134,15 @@
           <span class="flex justify-between">
             <h2 class="text-blue-50/90 text-3xl">Receptor</h2>
             <div
-              id="receptor-connected-status"
-              class="group flex items-end flex-col justify-center"
-              data-connected=""
+            id="receptor-connected-status"
+            class="group flex items-end flex-col justify-center"
+            data-connected=""
             >
               <div class="flex items-center gap-2">
                 <div
                   class="w-4 h-4 group-data-[connected='false']:bg-red-400 group-data-[connected='true']:bg-green-400 group-data-[connected='']:bg-yellow-400 rounded-full"
-                ></div>
-                <p
+                  ></div>
+                  <p
                   class="my-auto group-data-[connected='false']:block opacity-80 hidden"
                 >
                   Erro!
@@ -107,9 +150,9 @@
                 <p
                   class="my-auto group-data-[connected='true']:block opacity-80 hidden"
                 >
-                  Conectado
-                </p>
-                <p
+                Conectado
+              </p>
+              <p
                   class="my-auto group-data-[connected='']:block opacity-80 hidden"
                 >
                   Conectando...
@@ -142,7 +185,7 @@
                 Modulação em ASK
               </h2>
             </summary>
-            <span class="text-blue-50/70 text-xl" id="ASK-chart-data"> </span>
+            <span class="text-blue-50/70 text-xl break-all" id="ASK-chart-data"> </span>
             <div
               id="ASK-chart"
               class="w-[90vw] shadow-2xl shadow-slate-950 m-10"
@@ -156,7 +199,7 @@
                 Modulação em FSK
               </h2>
             </summary>
-            <span class="text-blue-50/70 text-xl" id="FSK-chart-data"> </span>
+            <span class="text-blue-50/70 text-xl break-all" id="FSK-chart-data"> </span>
             <div
               id="FSK-chart"
               class="w-[90vw] shadow-2xl shadow-slate-950 m-10"
@@ -170,7 +213,7 @@
                 Modulação em 8QAM
               </h2>
             </summary>
-            <span class="text-blue-50/70 text-xl" id="QAM8-chart-data"> </span>
+            <span class="text-blue-50/70 text-xl break-all" id="QAM8-chart-data"> </span>
             <div
               id="QAM8-chart"
               class="w-[90vw] shadow-2xl shadow-slate-950 m-10"
@@ -178,6 +221,8 @@
           </details>
         </div>
       </div>
+      <footer class="px-12 py-6 relative">
+        
     </main>
     <script type="module" src="./src/Simulador/main.js"></script>
   </body>
