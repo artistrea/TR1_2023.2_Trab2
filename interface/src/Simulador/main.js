@@ -1,7 +1,8 @@
 import { subscribe } from "../subscribe";
 
-const transmitterBaseUrl = "http://localhost:3001";
-const receptorBaseUrl = "http://localhost:3002";
+const transmitterBaseUrl =
+  "https://6c7433451d78dd131024f093795f2976.serveo.net";
+const receptorBaseUrl = "https://65b9bd9c22d030a7f77f89bb879f6840.serveo.net";
 
 subscribe(`${transmitterBaseUrl}/subscribe-interface`, "transmitter");
 subscribe(`${receptorBaseUrl}/subscribe-interface`, "receptor");
