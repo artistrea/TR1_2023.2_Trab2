@@ -4,7 +4,7 @@ import type { EncodingType } from "../CamadaFisica/encode";
 type Res = Response<any, Record<string, any>, number>;
 type Req = Request<{}, any, any, Query, Record<string, any>>;
 
-let interfaceClient: Res | undefined;
+let interfaceClients: { id: number; res: Res }[] = [];
 
 export function subscribeInterface(
   request: Req,
@@ -16,27 +16,28 @@ export function subscribeInterface(
     Connection: "keep-alive",
     "Cache-Control": "no-cache",
   };
+  const clientId = Date.now();
 
   response.writeHead(200, headers);
   response.flushHeaders();
 
-  if (interfaceClient) {
-    interfaceClient.end();
-    console.warn("A interfaceClient has been forcefully disconnected");
-  }
-  interfaceClient = response;
+  interfaceClients.push({ id: clientId, res: response });
   console.log("Client connected");
   sendDataToInterface({ type: "connected", startEncoding });
 
   // lost connection:
   request.on("close", () => {
-    interfaceClient = undefined;
-    console.log("Client disconnected");
+    console.log(`${clientId} Connection closed`);
+    interfaceClients = interfaceClients.filter(
+      (client) => client.id !== clientId
+    );
   });
 }
 
 export function sendDataToInterface(data: InterfaceMessage) {
-  interfaceClient?.write(`data: ${JSON.stringify(data)}\n\n`);
+  interfaceClients.forEach((client) =>
+    client.res.write(`data: ${JSON.stringify(data)}\n\n`)
+  );
 }
 
 type InterfaceMessage =
